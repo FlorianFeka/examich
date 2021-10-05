@@ -33,6 +33,7 @@
     <ProjectReference Include="..\Examich.DTO\Examich.DTO.csproj" />
     <ProjectReference Include="..\Examich.Entity\Examich.Entity.csproj" />
     <ProjectReference Include="..\Examich.Exceptions\Examich.Exceptions.csproj" />
+    <ProjectReference Include="..\Examich.Interfaces\Examich.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>

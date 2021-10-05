@@ -3,6 +3,7 @@ using Examich.DTO;
 using Examich.DTO.User;
 using Examich.Entity.Data.User;
 using Examich.Exceptions;
+using Examich.Interfaces.Entity.Repository;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -40,15 +41,22 @@ namespace Examich.Entity.Repository
             return userEntity.Id;
         }
 
-        public UserEntity GetUserByEmailAndPassword(string email, string password)
+        public GetUserDto GetUserByEmailAndPassword(string email, string password)
         {
             using var sha256 = SHA256.Create();
-            return _context.ApplicationUsers.FirstOrDefault(x => x.Email.ToLower() == email.ToLower() && x.PasswordHash == Encoding.UTF8.GetString(sha256.ComputeHash(Encoding.UTF8.GetBytes(password))));
+            var hashedPassword = Encoding.UTF8.GetString(sha256.ComputeHash(Encoding.UTF8.GetBytes(password)));
+            var user = _context.ApplicationUsers.FirstOrDefault(
+                x => x.Email.ToLower() == email.ToLower() 
+                && x.PasswordHash == hashedPassword);
+            return _mapper.Map<GetUserDto>(user);
         }
 
-        public IEnumerable<UserEntity> GetUserByUsername(string username)
+        public IEnumerable<GetUserDto> GetUserByUsername(string username)
         {
-            return _context.ApplicationUsers.Where(x => x.UserName.ToLower().Contains(username.ToLower()));
+            var userDtos = _context.ApplicationUsers.Where(
+                x => x.UserName.ToLower().Contains(username.ToLower()))
+                .Select(x => _mapper.Map<GetUserDto>(x));
+            return userDtos;
         }
 
         public GetUserDto GetUserById(string id)

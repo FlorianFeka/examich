@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Examich.DTO\Examich.DTO.csproj" />
+    <ProjectReference Include="..\Examich.Exceptions\Examich.Exceptions.csproj" />
+  </ItemGroup>
+
+</Project>

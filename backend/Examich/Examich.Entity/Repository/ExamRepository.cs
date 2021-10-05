@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Examich.DTO.Exam;
+using Examich.Interfaces.Entity.Repository;
 using System;
 using System.Collections.Generic;
 
@@ -21,6 +22,11 @@ namespace Examich.Entity.Repository
 
         }
 
+        public GetExamDto DuplicateExam(DuplicateExamDto duplicateExam)
+        {
+            throw new NotImplementedException();
+        }
+
         public GetExamDto GetExamById(string id, string userId)
         {
             throw new NotImplementedException();
@@ -37,5 +43,8 @@ namespace Examich.Entity.Repository
         }
 
         private bool ExamExists()
+        {
+            return false;
+        }
     }
 }
