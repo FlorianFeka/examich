@@ -10,8 +10,12 @@ namespace Examich.Entity.Data.Exam
         public string Name {  get; set; }
         public string Description {  get; set; }
 
-        public IEnumerable<UserEntity> Users { get; set; }
-        public IEnumerable<ExamUserEntity> ExamUsers { get; set; }
+        public string CreatorId { get; set; }
+        public UserEntity Creator { get; set; }
+        public string UserId { get; set; }
+        public UserEntity User { get; set; }
+        //public IEnumerable<UserEntity> Users { get; set; }
+        //public IEnumerable<ExamUserEntity> ExamUsers { get; set; }
         public IEnumerable<QuestionEntity> Questions { get; set; }
 
         public static new void OnModelBuilding(ModelBuilder builder)
@@ -20,9 +24,8 @@ namespace Examich.Entity.Data.Exam
                 .Property(x => x.Name)
                 .IsRequired();
 
-            // TODO: unique name per user
             builder.Entity<ExamEntity>()
-                .HasIndex(x => x.Name)
+                .HasIndex(x => new { x.UserId, x.Name })
                 .IsUnique();
         }
     }
