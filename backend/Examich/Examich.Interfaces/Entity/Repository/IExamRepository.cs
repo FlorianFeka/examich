@@ -6,9 +6,9 @@ namespace Examich.Interfaces.Entity.Repository
     public interface IExamRepository
     {
         void AddExam(CreateExamDto createExam);
-        IEnumerable<GetExamDto> GetExamsByName(string name, string userId);
+        IEnumerable<GetExamDto> GetExamsByName(string name);
         IEnumerable<GetExamDto> GetExamsByUserId(string userId);
-        GetExamDto GetExamById(string id, string userId);
+        GetExamDto GetExamById(string id);
         GetExamDto DuplicateExam(DuplicateExamDto duplicateExam);
     }
 }

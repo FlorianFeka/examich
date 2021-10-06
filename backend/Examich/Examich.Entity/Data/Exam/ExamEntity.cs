@@ -1,11 +1,12 @@
 ﻿using Examich.Entity.Data.Base;
 using Examich.Entity.Data.User;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 
 namespace Examich.Entity.Data.Exam
 {
-    public class ExamEntity : AuditEntity
+    public class ExamEntity : AuditEntity, ICloneable
     {
         public string Name {  get; set; }
         public string Description {  get; set; }
@@ -27,6 +28,16 @@ namespace Examich.Entity.Data.Exam
             builder.Entity<ExamEntity>()
                 .HasIndex(x => new { x.UserId, x.Name })
                 .IsUnique();
+        }
+
+        public object Clone()
+        {
+            
+            return new ExamEntity()
+            {
+                Id = new string(this.Id),
+                
+            };
         }
     }
 }
