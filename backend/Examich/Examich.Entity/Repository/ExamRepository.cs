@@ -70,5 +70,14 @@ namespace Examich.Entity.Repository
                 .Select(x => _mapper.Map<GetExamDto>(x));
             return exams;
         }
+
+        public void UpdateExam(string examId, UpdateExamDto updateExam)
+        {
+            var examToUpdate = _context.Exams.FirstOrDefault(x => x.Id == examId);
+            if (examToUpdate == null) throw new ExamichDbException("Exam not found.");
+
+            _mapper.Map(updateExam, examToUpdate);
+            _context.SaveChanges();
+        }
     }
 }
