@@ -70,17 +70,26 @@ namespace Examich.Entity.Repository
             var exams = _context.Exams
                 .AsNoTracking()
                 .Where(x => x.UserId == userId)
-                .Select(x => _mapper.Map<GetExamDto>(x))
-                ;
+                .Select(x => _mapper.Map<GetExamDto>(x));
             return exams;
         }
 
-        public void UpdateExam(string examId, UpdateExamDto updateExam)
+        public void UpdateExam(string examId, string userId, UpdateExamDto updateExam)
         {
             var examToUpdate = _context.Exams.FirstOrDefault(x => x.Id == examId);
             if (examToUpdate == null) throw new ExamichDbException("Exam not found.");
+            if(examToUpdate.UserId == userId) throw new ExamichDbException("Exam not owned by user.");
 
             _mapper.Map(updateExam, examToUpdate);
+            _context.SaveChanges();
+        }
+
+        public void DeleteExam(string examId, string userId)
+        {
+            var exam = _context.Exams.FirstOrDefault(x => x.Id == examId);
+            if (exam == null) throw new ExamichDbException("Exam not found.");
+            if (exam.UserId != userId) throw new ExamichDbException("Exam not owned by user.");
+            _context.Exams.Remove(exam);
             _context.SaveChanges();
         }
     }

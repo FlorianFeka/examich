@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Examich.Entity.Data.Exam
 {
-    public class ExamEntity : AuditEntity, ICloneable
+    public class ExamEntity : AuditEntity
     {
         public string Name {  get; set; }
         public string Description {  get; set; }
@@ -15,8 +15,6 @@ namespace Examich.Entity.Data.Exam
         public UserEntity Creator { get; set; }
         public string UserId { get; set; }
         public UserEntity User { get; set; }
-        //public IEnumerable<UserEntity> Users { get; set; }
-        //public IEnumerable<ExamUserEntity> ExamUsers { get; set; }
         public IEnumerable<QuestionEntity> Questions { get; set; }
 
         public static new void OnModelBuilding(ModelBuilder builder)
@@ -28,16 +26,6 @@ namespace Examich.Entity.Data.Exam
             builder.Entity<ExamEntity>()
                 .HasIndex(x => new { x.UserId, x.Name })
                 .IsUnique();
-        }
-
-        public object Clone()
-        {
-            
-            return new ExamEntity()
-            {
-                Id = new string(this.Id),
-                
-            };
         }
     }
 }
