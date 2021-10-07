@@ -24,23 +24,26 @@ namespace Examich.Entity.Repository
 
         }
 
-        public void AddExam(CreateExamDto createExamDto)
+        public void AddExam(string userId, CreateExamDto createExamDto)
         {
             var exam = _mapper.Map<ExamEntity>(createExamDto);
+            exam.UserId = userId;
+            exam.CreatorId = userId;
             _context.Exams.Add(exam);
+            _context.SaveChanges();
         }
 
-        public GetExamDto DuplicateExam(DuplicateExamDto duplicateExam)
+        public GetExamDto DuplicateExam(string examId, string userId)
         {
             var examToDuplicate = _context.Exams
                 .AsNoTracking()
-                .FirstOrDefault(x => x.Id == duplicateExam.ExamId);
+                .FirstOrDefault(x => x.Id == examId);
 
             if (examToDuplicate == null) throw new ExamichDbException("Exam not found.");
             if (!_userRepository.UserExists(examToDuplicate.UserId)) throw new ExamichDbException("User not found.");
 
             examToDuplicate.Id = Guid.NewGuid().ToString();
-            examToDuplicate.UserId = duplicateExam.UserId;
+            examToDuplicate.UserId = userId;
             _context.Exams.Add(examToDuplicate);
             _context.SaveChanges();
 
@@ -66,8 +69,9 @@ namespace Examich.Entity.Repository
         {
             var exams = _context.Exams
                 .AsNoTracking()
-                .Where(x => x.Id == userId)
-                .Select(x => _mapper.Map<GetExamDto>(x));
+                .Where(x => x.UserId == userId)
+                .Select(x => _mapper.Map<GetExamDto>(x))
+                ;
             return exams;
         }
 
