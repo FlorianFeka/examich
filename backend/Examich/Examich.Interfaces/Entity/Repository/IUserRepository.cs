@@ -10,5 +10,6 @@ namespace Examich.Interfaces.Entity.Repository
         GetUserDto GetUserByEmailAndPassword(string email, string password);
         string CreateUser(CreateUserDto user);
         IEnumerable<GetUserDto> GetUserByUsername(string username);
+        bool UserExists(string userId);
     }
 }

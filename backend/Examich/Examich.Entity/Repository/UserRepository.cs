@@ -4,6 +4,7 @@ using Examich.DTO.User;
 using Examich.Entity.Data.User;
 using Examich.Exceptions;
 using Examich.Interfaces.Entity.Repository;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -45,7 +46,7 @@ namespace Examich.Entity.Repository
         {
             using var sha256 = SHA256.Create();
             var hashedPassword = Encoding.UTF8.GetString(sha256.ComputeHash(Encoding.UTF8.GetBytes(password)));
-            var user = _context.ApplicationUsers.FirstOrDefault(
+            var user = _context.ApplicationUsers.AsNoTracking().FirstOrDefault(
                 x => x.Email.ToLower() == email.ToLower() 
                 && x.PasswordHash == hashedPassword);
             return _mapper.Map<GetUserDto>(user);
@@ -53,7 +54,7 @@ namespace Examich.Entity.Repository
 
         public IEnumerable<GetUserDto> GetUserByUsername(string username)
         {
-            var userDtos = _context.ApplicationUsers.Where(
+            var userDtos = _context.ApplicationUsers.AsNoTracking().Where(
                 x => x.UserName.ToLower().Contains(username.ToLower()))
                 .Select(x => _mapper.Map<GetUserDto>(x));
             return userDtos;
@@ -61,7 +62,7 @@ namespace Examich.Entity.Repository
 
         public GetUserDto GetUserById(string id)
         {
-            var user = _context.ApplicationUsers.FirstOrDefault(x => x.Id == id);
+            var user = _context.ApplicationUsers.AsNoTracking().FirstOrDefault(x => x.Id == id);
             if (user == null) return null;
             return new GetUserDto()
             {
@@ -74,9 +75,14 @@ namespace Examich.Entity.Repository
         private int UserExists(string email, string username)
         {
             int count = 0;
-            count += _context.ApplicationUsers.Where(x => x.Email == email ).Any() ? 1 : 0;
-            count += _context.ApplicationUsers.Where(x => x.UserName == username).Any() ? 2 : 0;
+            count += _context.ApplicationUsers.AsNoTracking().Where(x => x.Email == email ).Any() ? 1 : 0;
+            count += _context.ApplicationUsers.AsNoTracking().Where(x => x.UserName == username).Any() ? 2 : 0;
             return count;
+        }
+
+        public bool UserExists(string userId)
+        {
+            return _context.ApplicationUsers.Any(x => x.Id == userId);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Examich.DTO;
-using Examich.Entity.Repository;
 using Examich.Exceptions;
+using Examich.Interfaces.Entity.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -50,6 +50,7 @@ namespace Examich.Controllers
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(ClaimTypes.Email, user.Email),
             };
 

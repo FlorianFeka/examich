@@ -5,10 +5,12 @@ namespace Examich.Interfaces.Entity.Repository
 {
     public interface IExamRepository
     {
-        void AddExam(CreateExamDto createExam);
-        IEnumerable<GetExamDto> GetExamsByName(string name, string userId);
+        void AddExam(string userId, CreateExamDto createExam);
+        void UpdateExam(string examId, string userId, UpdateExamDto updateExam);
+        IEnumerable<GetExamDto> GetExamsByName(string name);
         IEnumerable<GetExamDto> GetExamsByUserId(string userId);
-        GetExamDto GetExamById(string id, string userId);
-        GetExamDto DuplicateExam(DuplicateExamDto duplicateExam);
+        GetExamDto GetExamById(string id);
+        GetExamDto DuplicateExam(string examId, string userId);
+        void DeleteExam(string examId, string userId);
     }
 }

@@ -1,7 +1,11 @@
-﻿using Examich.Entity.Repository;
-using Examich.Entity.Data.User;
+﻿using Examich.DTO.User;
+using Examich.Interfaces.Entity.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Text.Json;
 
 namespace Examich.Controllers
 {
@@ -17,9 +21,16 @@ namespace Examich.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<UserEntity> Get(string username = null)
+        public IEnumerable<GetUserDto> Get(string username = null)
         {
             return _userRepository.GetUserByUsername(username);
+        }
+
+        [Authorize]
+        [HttpOptions]
+        public IEnumerable<string> Options()
+        {
+            return User.Claims.Select(x => $"{x.Type} - {x.Value}");
         }
     }
 }

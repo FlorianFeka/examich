@@ -1,6 +1,7 @@
 ﻿using Examich.Entity.Data.Base;
 using Examich.Entity.Data.User;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 
 namespace Examich.Entity.Data.Exam
@@ -14,8 +15,6 @@ namespace Examich.Entity.Data.Exam
         public UserEntity Creator { get; set; }
         public string UserId { get; set; }
         public UserEntity User { get; set; }
-        //public IEnumerable<UserEntity> Users { get; set; }
-        //public IEnumerable<ExamUserEntity> ExamUsers { get; set; }
         public IEnumerable<QuestionEntity> Questions { get; set; }
 
         public static new void OnModelBuilding(ModelBuilder builder)
