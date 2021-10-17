@@ -7,10 +7,12 @@ import { ApiModule } from 'src/api';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './core/header/header.component';
+import { MaterialModule } from './material.module';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
   imports: [
+    MaterialModule,
     BrowserModule,
     NoopAnimationsModule,
     HttpClientModule,
