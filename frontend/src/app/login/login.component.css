@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-container {
+  display: flexbox;
+  margin: auto;
+  background-color: hsl(0, 0%, 93%);
+  border-radius: 10px;
+  padding: 2em;
+  width: 40%;
+}
+
+.login-form {
+  justify-content: center;
+  align-items: center;
+}
+
+mat-form-field {
+  width: 100%;
+}
