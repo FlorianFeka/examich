@@ -33,7 +33,7 @@ namespace Examich
             {
                 opt.AddDefaultPolicy(builder =>
                 {
-                    builder.WithOrigins(Configuration["AllowedHosts"])
+                    builder.WithOrigins(Configuration["CorsHosts"])
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
