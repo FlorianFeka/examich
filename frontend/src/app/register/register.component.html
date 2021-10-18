@@ -1,1 +1,52 @@
-<p>register works!</p>
+<div class="container">
+  <mat-card class="register-container">
+    <mat-card-title>Register</mat-card-title>
+    <div class="register-form">
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill">
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="username" />
+          <mat-error
+            *ngIf="registerForm.controls['username'].hasError('required')"
+          >
+            Username is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" />
+          <mat-error
+            *ngIf="registerForm.controls['email'].hasError('required')"
+          >
+            Email is <strong>required</strong>
+          </mat-error>
+          <mat-error *ngIf="registerForm.controls['email'].hasError('email')">
+            Email is <strong>invalid</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password" />
+          <mat-error
+            *ngIf="registerForm.controls['password'].hasError('required')"
+          >
+            Password is <strong>required</strong>
+          </mat-error>
+          <mat-error
+            *ngIf="registerForm.controls['password'].hasError('minlength')"
+          >
+            Minimum <strong>5 characters</strong>
+          </mat-error>
+        </mat-form-field>
+        <button
+          style="float: right"
+          mat-raised-button
+          color="primary"
+          type="submit"
+        >
+          Register
+        </button>
+      </form>
+    </div>
+  </mat-card>
+</div>

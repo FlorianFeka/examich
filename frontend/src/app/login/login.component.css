@@ -7,13 +7,13 @@
 .login-container {
   display: flexbox;
   margin: auto;
-  background-color: hsl(0, 0%, 93%);
-  border-radius: 10px;
+  background-color: hsl(0, 0%, 98%);
   padding: 2em;
-  width: 40%;
+  width: 45%;
 }
 
 .login-form {
+  padding-top: 1.5em;
   justify-content: center;
   align-items: center;
 }

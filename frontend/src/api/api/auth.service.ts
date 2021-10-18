@@ -19,12 +19,11 @@ import { CustomHttpParameterCodec } from '../encoder';
 import { CreateUserDto, LoginDto } from '../model/models';
 import { BASE_PATH } from '../variables';
 
-
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  protected basePath = 'http://localhost';
+  protected basePath = 'https://localhost:5001';
   public defaultHeaders = new HttpHeaders();
   public configuration = new Configuration();
   public encoder: HttpParameterCodec;
