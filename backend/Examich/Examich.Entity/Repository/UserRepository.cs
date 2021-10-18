@@ -33,7 +33,6 @@ namespace Examich.Entity.Repository
                 case 3:
                     throw new ExamichDbException($"User with email '{user.Email}' and username '{user.Username}' already exists.");
             }
-            using var sha256 = SHA256.Create();
 
             var userEntity = _mapper.Map<UserEntity>(user);
 

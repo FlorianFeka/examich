@@ -29,6 +29,16 @@ namespace Examich
         {
             services.AddControllers();
 
+            services.AddCors(opt =>
+            {
+                opt.AddDefaultPolicy(builder =>
+                {
+                    builder.WithOrigins(Configuration["CorsHosts"])
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Examich", Version = "v1" });
@@ -92,6 +102,8 @@ namespace Examich
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthentication();
 
