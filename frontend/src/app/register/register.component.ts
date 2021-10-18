@@ -44,7 +44,7 @@ export class RegisterComponent implements OnInit {
     result.subscribe(
       (result) => {
         console.log(result);
-        // this.router.navigate(['login']);
+        this.router.navigate(['login']);
       },
       (err) => {
         this.snackBar.open(err.error, 'Dismiss', { duration: 5000 });
