@@ -1,7 +1,7 @@
 <div class="container">
   <mat-card class="login-container">
     <mat-card-title>Login</mat-card-title>
-    <div class="login-form">
+    <mat-card-content class="login-form">
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <mat-form-field appearance="fill">
           <mat-label>Email</mat-label>
@@ -22,15 +22,10 @@
             Password is <strong>required</strong>
           </mat-error>
         </mat-form-field>
-        <button
-          style="float: right"
-          mat-raised-button
-          color="primary"
-          type="submit"
-        >
-          Login
-        </button>
+        <mat-card-actions align="end">
+          <button mat-raised-button color="primary" type="submit">Login</button>
+        </mat-card-actions>
       </form>
-    </div>
+    </mat-card-content>
   </mat-card>
 </div>
