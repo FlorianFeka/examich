@@ -32,7 +32,7 @@ namespace Examich.Controllers
             {
                 var id = _userRepository.CreateUser(userDto);
                 if (id == null) return Conflict();
-                return Created("https://localhost:5001/users", id);
+                return Created("https://localhost:5001/users", new { id });
             }
             catch (ExamichDbException e)
             {
