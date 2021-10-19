@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/api';
 
+import { AuthUtilService } from '../services/auth-util.service';
+
 @Component({
   selector: 'examich-register',
   templateUrl: './register.component.html',
@@ -18,7 +20,8 @@ export class RegisterComponent implements OnInit {
     fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private authUtil: AuthUtilService
   ) {
     this.registerForm = fb.group({
       username: ['', [Validators.required]],
@@ -27,7 +30,9 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.authUtil.isAuthenticated()) this.router.navigate(['dashboard']);
+  }
 
   onSubmit(): void {
     if (this.registerForm.invalid) {

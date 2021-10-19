@@ -3,10 +3,16 @@
     <img style="height: 3.5em" src="../../../assets/logo_text_horizontal.svg" />
   </a>
   <div style="width: 100%"></div>
-  <a routerLink="/login">
-    <span style="padding-right: 15px">Login</span>
-  </a>
-  <a routerLink="/register">
-    <span>Register</span>
-  </a>
+  <div *ngIf="username$ | async; else loggedIn">
+    <a routerLink="/login">
+      <span style="padding-right: 15px">Login</span>
+    </a>
+    <a routerLink="/register">
+      <span>Register</span>
+    </a>
+  </div>
 </mat-toolbar>
+
+<ng-template #loggedIn>
+  <span>{{ username$ | async }}</span>
+</ng-template>

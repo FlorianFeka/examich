@@ -1,15 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { AuthUtilService } from 'src/app/services/auth-util.service';
 
 @Component({
   selector: 'examich-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
+  authenticated$: Observable<boolean>;
+  username$: Observable<string>;
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(private authUtil: AuthUtilService) {
+    this.authenticated$ = authUtil.getAuthenticatedObs();
+    this.username$ = authUtil.getUsername();
   }
 
+  ngOnInit(): void {}
 }

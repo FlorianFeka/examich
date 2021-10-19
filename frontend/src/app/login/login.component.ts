@@ -4,6 +4,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/api';
 
+import { AuthUtilService } from '../services/auth-util.service';
+
 @Component({
   selector: 'examich-login',
   templateUrl: './login.component.html',
@@ -16,7 +18,8 @@ export class LoginComponent implements OnInit {
     fb: FormBuilder,
     private auth: AuthService,
     private snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private authUtil: AuthUtilService
   ) {
     this.loginForm = fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -24,7 +27,9 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.authUtil.isAuthenticated()) this.router.navigate(['dashboard']);
+  }
 
   onSubmit(): void {
     if (this.loginForm.invalid) {
