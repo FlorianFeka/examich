@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/api';
 
 import { AuthUtilService } from '../services/auth-util.service';
 
@@ -16,8 +14,6 @@ export class LoginComponent implements OnInit {
 
   constructor(
     fb: FormBuilder,
-    private auth: AuthService,
-    private snackBar: MatSnackBar,
     private router: Router,
     private authUtil: AuthUtilService
   ) {
@@ -36,22 +32,10 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    let result = this.auth.apiAuthLoginPost({
+    this.authUtil.authenticate({
       email: this.loginForm.get('email')?.value,
       password: this.loginForm.get('password')?.value,
       rememberLogin: true,
     });
-    result.subscribe(
-      (a) => {
-        localStorage.setItem('token', a.token);
-        this.router.navigate(['dashboard']);
-      },
-      (err) => {
-        if (err.status === 401)
-          this.snackBar.open('Wrong email or password.', 'Dismiss', {
-            duration: 5000,
-          });
-      }
-    );
   }
 }

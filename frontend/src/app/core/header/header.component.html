@@ -2,17 +2,20 @@
   <a style="height: 3.5em" routerLink="/dashboard">
     <img style="height: 3.5em" src="../../../assets/logo_text_horizontal.svg" />
   </a>
-  <div style="width: 100%"></div>
-  <div *ngIf="username$ | async; else loggedIn">
-    <a routerLink="/login">
-      <span style="padding-right: 15px">Login</span>
+  <span style="flex: 1 1 auto"></span>
+  <div *ngIf="!(authenticated$ | async); else loggedIn">
+    <a routerLink="/login" style="margin-right: 0.5em">
+      <button mat-stroked-button color="primary">Login</button>
     </a>
     <a routerLink="/register">
-      <span>Register</span>
+      <button mat-stroked-button color="primary">Register</button>
     </a>
   </div>
 </mat-toolbar>
 
 <ng-template #loggedIn>
-  <span>{{ username$ | async }}</span>
+  <p class="username">{{ username }}</p>
+  <button mat-stroked-button color="primary" (click)="onLogout()">
+    Logout
+  </button>
 </ng-template>

@@ -11,10 +11,21 @@ export class HeaderComponent implements OnInit {
   authenticated$: Observable<boolean>;
   username$: Observable<string>;
 
+  username: string = '';
+
   constructor(private authUtil: AuthUtilService) {
     this.authenticated$ = authUtil.getAuthenticatedObs();
     this.username$ = authUtil.getUsername();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.username$.subscribe((a) => {
+      this.username = a;
+      console.log(a);
+    });
+  }
+
+  onLogout(): void {
+    this.authUtil.logout();
+  }
 }
