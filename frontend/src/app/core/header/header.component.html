@@ -14,7 +14,7 @@
 </mat-toolbar>
 
 <ng-template #loggedIn>
-  <p class="username">{{ username }}</p>
+  <p class="username">{{ username$ | async }}</p>
   <button mat-stroked-button color="primary" (click)="onLogout()">
     Logout
   </button>

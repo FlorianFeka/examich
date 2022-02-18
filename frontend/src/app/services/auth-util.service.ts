@@ -52,6 +52,7 @@ export class AuthUtilService {
     localStorage.removeItem('token');
     this.setUnauthenticated();
     this.setUsername('');
+    localStorage.removeItem('user');
     this.userData = undefined;
     this.router.navigate(['login']);
   }
@@ -69,6 +70,7 @@ export class AuthUtilService {
   public fetchUserdata(): void {
     this.userService.infoGet().subscribe((user) => {
       this.userData = user;
+      localStorage.setItem('user', JSON.stringify(user));
       this.setUsername(`${this.userData.userName}`);
     });
   }
@@ -85,11 +87,25 @@ export class AuthUtilService {
     return this.authenticated$;
   }
 
-  public setUsername(name: string): void {
+  public setUsername(name: string | undefined | null): void {
+    if (name === undefined || name === null) return;
     this._username.next(name);
   }
 
   public getUsername(): Observable<string> {
+    this.userData = this.getUserDataFromStorage();
+    this.setUsername(this.userData?.userName);
     return this.username$;
+  }
+
+  public getUserDataFromStorage(): GetUserDto | undefined {
+    const data = localStorage.getItem('user');
+    if (data === undefined || data === null) return undefined;
+    return JSON.parse(data);
+  }
+
+  public getU(): string {
+    if (this.userData?.userName == undefined) return '';
+    return `${this.userData?.userName}`;
   }
 }
