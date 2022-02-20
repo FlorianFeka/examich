@@ -5,6 +5,7 @@ services:
     build: ./frontend
     profiles:
       - frontend
+      - all
     ports:
       - 4400:80
 
@@ -14,6 +15,7 @@ services:
       ASPNETCORE_ENVIRONMENT: Production
     profiles:
       - backend
+      - all
     ports:
       - 80:80
       - 443:433
@@ -28,6 +30,8 @@ services:
       - 5432:5432
     profiles:
       - backend
+      - db
+      - all
     environment:
       POSTGRES_USER: examich_backend_system
       POSTGRES_PASSWORD: justaplaceholder
