@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  examich_frontend:
+    build: ./frontend
+    profiles:
+      - frontend
+    ports:
+      - 4400:80
+
+  examich_backend:
+    build: ./backend/Examich
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+    profiles:
+      - backend
+    ports:
+      - 80:80
+      - 443:433
+    depends_on:
+      - examich_db
+    links:
+      - examich_db
+
+  examich_db:
+    image: postgres
+    profiles:
+      - backend
+    environment:
+      POSTGRES_USER: examich_backend_system
+      POSTGRES_PASSWORD: justaplaceholder
+      POSTGRES_DB: examich
