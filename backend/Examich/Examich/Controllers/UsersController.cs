@@ -20,6 +20,14 @@ namespace Examich.Controllers
             _userRepository = userRepository;
         }
 
+        private string GetUserId()
+        {
+            return User.Claims
+                    .Where(x => x.Type == ClaimTypes.NameIdentifier)
+                    .Select(x => x.Value)
+                    .FirstOrDefault();
+        }
+
         [HttpGet]
         public IEnumerable<GetUserDto> Get(string username = null)
         {
@@ -31,6 +39,13 @@ namespace Examich.Controllers
         public IEnumerable<string> Options()
         {
             return User.Claims.Select(x => $"{x.Type} - {x.Value}");
+        }
+
+        [Authorize]
+        [HttpGet("/Info")]
+        public GetUserDto GetInfo()
+        {
+            return _userRepository.GetUserById(GetUserId());
         }
     }
 }

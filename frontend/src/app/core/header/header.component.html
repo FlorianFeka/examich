@@ -1,10 +1,21 @@
 <mat-toolbar style="margin-bottom: 2em">
-  <span>Examich</span>
-  <div style="width: 100%"></div>
-  <a routerLink="/login">
-    <span style="padding-right: 15px">Login</span>
+  <a style="height: 3.5em" routerLink="/dashboard">
+    <img style="height: 3.5em" src="../../../assets/logo_text_horizontal.svg" />
   </a>
-  <a routerLink="/register">
-    <span>Register</span>
-  </a>
+  <span style="flex: 1 1 auto"></span>
+  <div *ngIf="!(authenticated$ | async); else loggedIn">
+    <a routerLink="/login" style="margin-right: 0.5em">
+      <button mat-stroked-button color="primary">Login</button>
+    </a>
+    <a routerLink="/register">
+      <button mat-stroked-button color="primary">Register</button>
+    </a>
+  </div>
 </mat-toolbar>
+
+<ng-template #loggedIn>
+  <p class="username">{{ username$ | async }}</p>
+  <button mat-stroked-button color="primary" (click)="onLogout()">
+    Logout
+  </button>
+</ng-template>
