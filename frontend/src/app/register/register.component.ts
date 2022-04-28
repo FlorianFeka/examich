@@ -54,7 +54,7 @@ export class RegisterComponent implements OnInit {
       (err) => {
         console.error(err);
         this.snackBar.open(
-          'There seems to be a problem, please try agani later',
+          'There seems to be a problem, please try again later',
           'Dismiss',
           { duration: 5000 }
         );
