@@ -52,7 +52,12 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['login']);
       },
       (err) => {
-        this.snackBar.open(err.error, 'Dismiss', { duration: 5000 });
+        console.error(err);
+        this.snackBar.open(
+          'There seems to be a problem, please try agani later',
+          'Dismiss',
+          { duration: 5000 }
+        );
       }
     );
   }

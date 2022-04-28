@@ -17,8 +17,8 @@ services:
       - backend
       - all
     ports:
-      - 80:80
-      - 443:433
+      - 5000:80
+      - 5001:433
     depends_on:
       - examich_db
     links:
