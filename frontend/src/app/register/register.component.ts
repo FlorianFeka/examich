@@ -1,4 +1,4 @@
-import { HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -51,13 +51,12 @@ export class RegisterComponent implements OnInit {
         console.log(result);
         this.router.navigate(['login']);
       },
-      (err) => {
-        console.error(err);
-        this.snackBar.open(
-          'There seems to be a problem, please try again later',
-          'Dismiss',
-          { duration: 5000 }
-        );
+      (err: HttpErrorResponse) => {
+        let errMessage = 'There seems to be a problem, please try again later';
+        if (typeof err.error === 'string') {
+          errMessage = err.error + '';
+        }
+        this.snackBar.open(errMessage, 'Dismiss', { duration: 5000 });
       }
     );
   }
