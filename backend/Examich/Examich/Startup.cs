@@ -1,4 +1,3 @@
-using System;
 using Examich.Entity;
 using Examich.Configuration.Dependency;
 using FluentValidation.AspNetCore;
@@ -19,11 +18,13 @@ namespace Examich
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
+            Environment = environment;
         }
 
+        public IWebHostEnvironment Environment { get;  }
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -85,6 +86,16 @@ namespace Examich
                 JwtBearerDefaults.AuthenticationScheme, 
                 opt =>
                 {
+                    /*if (!Environment.IsProduction())
+                    {
+                        opt.TokenValidationParameters.ValidateActor = false;
+                        opt.TokenValidationParameters.ValidateAudience = false;
+                        opt.TokenValidationParameters.ValidateIssuer = false;
+                        opt.TokenValidationParameters.ValidateLifetime = false;
+                        opt.TokenValidationParameters.ValidateTokenReplay = false;
+                        opt.TokenValidationParameters.ValidateIssuerSigningKey = false;
+                        opt.SecurityTokenValidators.Clear();
+                    }*/
                     Configuration.Bind("JwtSettings", opt);
                     opt.TokenValidationParameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["IssuerSigningKey"]));
                 });

@@ -9,31 +9,46 @@ namespace Examich.Entity.Seed.Seeder
 {
     public static class UserSeeder
     {
+        private static readonly List<UserEntity> users = new List<UserEntity>()
+        {
+            new ()
+            {
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000001"),
+                UserName = "user",
+                Email = "user@gmail.com",
+            },
+            new ()
+            {
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000002"),
+                UserName = "max",
+                Email = "max@gmail.com",
+            },
+            new ()
+            {
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000003"),
+                UserName = "admin",
+                Email = "admin@gmail.com",
+            },
+        };
+
+        public static bool TryGetUserId(string bearerName, out Guid id)
+        {
+            id = Guid.Empty;
+            foreach (var user in users)
+            {
+                if (String.Equals(user.UserName, bearerName, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    id = user.Id;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        
         public static async void Seed(ExamichDbContext dbContext)
         {
             if (dbContext.Users.Any()) return;
-
-            var users = new List<UserEntity>()
-            {
-                new ()
-                {
-                    Id = Guid.Parse("00000000-0000-0000-0000-000000000001"),
-                    UserName = "user",
-                    Email = "user@gmail.com",
-                },
-                new ()
-                {
-                    Id = Guid.Parse("00000000-0000-0000-0000-000000000002"),
-                    UserName = "max",
-                    Email = "max@gmail.com",
-                },
-                new ()
-                {
-                    Id = Guid.Parse("00000000-0000-0000-0000-000000000003"),
-                    UserName = "admin",
-                    Email = "admin@gmail.com",
-                },
-            };
             
             var passwordHasher = new PasswordHasher<UserEntity>();
             var userStore = new UserStore<UserEntity, IdentityRole<Guid>, ExamichDbContext, Guid>(dbContext);
