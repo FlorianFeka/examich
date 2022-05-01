@@ -30,7 +30,7 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ['localhost'],
+        allowedDomains: ['localhost', 'examich.io'],
       },
     }),
     AppRoutingModule,

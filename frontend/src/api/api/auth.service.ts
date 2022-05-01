@@ -24,7 +24,7 @@ import { BASE_PATH } from '../variables';
   providedIn: 'root',
 })
 export class AuthService {
-  protected basePath = 'https://localhost:5001';
+  protected basePath = 'http://localhost:5000';
   public defaultHeaders = new HttpHeaders();
   public configuration = new Configuration();
   public encoder: HttpParameterCodec;
