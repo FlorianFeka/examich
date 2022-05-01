@@ -8,9 +8,8 @@ using Examich.Interfaces.Entity.Repository;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Examich.Entity.Repository
 {
@@ -38,8 +37,13 @@ namespace Examich.Entity.Repository
 
             var userEntity = _mapper.Map<UserEntity>(user);
 
-            _context.Users.Add(userEntity);
+                       
+            var userStore = new UserStore<UserEntity, IdentityRole<Guid>, ExamichDbContext, Guid>(_context);
+            var result = userStore.CreateAsync(userEntity);
+            result.Wait();
+
             _context.SaveChanges();
+            
             return userEntity.Id;
         }
 
