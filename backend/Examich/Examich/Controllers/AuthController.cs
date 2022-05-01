@@ -31,7 +31,6 @@ namespace Examich.Controllers
             try
             {
                 var id = _userRepository.CreateUser(userDto);
-                if (id == null) return Conflict();
                 return Created("https://localhost:5001/users", new { id });
             }
             catch (ExamichDbException e)
@@ -49,9 +48,9 @@ namespace Examich.Controllers
 
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Email, user.Email),
+                new (JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new (ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new (ClaimTypes.Email, user.Email),
             };
 
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["IssuerSigningKey"]));

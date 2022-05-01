@@ -56,7 +56,7 @@ namespace Examich.Controllers
         public IActionResult GetAllExamsFromUser()
         {
             var userId = GetUserId();
-            if (userId == null) return Conflict("User does not exist.");
+            if (userId == Guid.Empty) return Conflict("User does not exist.");
 
             return Ok(_examRepository.GetExamsByUserId(userId));
         }
@@ -75,7 +75,7 @@ namespace Examich.Controllers
             try
             {
                 var userId = GetUserId();
-                if (userId == null) return Conflict("User does not exist.");
+                if (userId == Guid.Empty) return Conflict("User does not exist.");
 
                 _examRepository.AddExam(userId, createExamDto);
             }
@@ -95,7 +95,7 @@ namespace Examich.Controllers
             try
             {
                 var userId = GetUserId();
-                if (userId == null) return Conflict("User does not exist.");
+                if (userId == Guid.Empty) return Conflict("User does not exist.");
 
                 return Ok(_examRepository.DuplicateExam(examId, userId));
             }
@@ -113,7 +113,7 @@ namespace Examich.Controllers
             try
             {
                 var userId = GetUserId();
-                if (userId == null) return Conflict("User does not exist.");
+                if (userId == Guid.Empty) return Conflict("User does not exist.");
 
                 _examRepository.UpdateExam(examId, userId, updateExamDto);
             }
@@ -130,7 +130,7 @@ namespace Examich.Controllers
         public IActionResult DeleteExam(Guid examId)
         {
             var userId = GetUserId();
-            if (userId == null) return Conflict("User does not exist.");
+            if (userId == Guid.Empty) return Conflict("User does not exist.");
             try
             {
                 _examRepository.DeleteExam(examId, userId);

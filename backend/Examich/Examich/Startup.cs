@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text;
+using Examich.Entity.Seed;
 
 namespace Examich
 {
@@ -72,6 +73,8 @@ namespace Examich
 
             services.AddRepositoryConfig();
 
+            services.AddTransient<Seed>();
+
             services.AddDbContext<ExamichDbContext>(
                 //opt => opt.UseInMemoryDatabase(databaseName: "examich"));
                 //opt => opt.UseSqlServer(Configuration["ConnectionStrings:ExamichDb"]));
@@ -92,15 +95,11 @@ namespace Examich
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ExamichDbContext dbContext)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Seed seed)
         {
-            if (!dbContext.Database.EnsureCreated())
+            if (!env.IsProduction())
             {
-                Console.WriteLine("Database was not created");
-            }
-            
-            if (env.IsDevelopment())
-            {
+                seed.Init();
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Examich v1"));

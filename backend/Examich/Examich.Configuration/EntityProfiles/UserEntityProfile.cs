@@ -3,6 +3,7 @@ using Examich.DTO;
 using Examich.Entity.Data.User;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
 
 namespace Examich.Configuration.EntityProfiles
 {
@@ -12,15 +13,15 @@ namespace Examich.Configuration.EntityProfiles
         {
             CreateMap<CreateUserDto, UserEntity>()
                 .ForMember(x => x.UserName, opt => opt.MapFrom(x => x.Username))
-                .ForMember(x => x.PasswordHash, opt => opt.MapFrom(x => CreateHash(x.Password)))
                 .ForMember(x => x.Email, opt => opt.MapFrom(x => x.Email))
+                .AfterMap((src, dst) => dst.PasswordHash = CreateHash(dst, src.Password))
                 .ForAllOtherMembers(x => x.Ignore());
         }
 
-        private string CreateHash(string text)
+        private string CreateHash(UserEntity userEntity, string password)
         {
-            using var sha256 = SHA256.Create();
-            return Encoding.UTF8.GetString(sha256.ComputeHash(Encoding.UTF8.GetBytes(text)));
+            var passwordHasher = new PasswordHasher<UserEntity>();
+            return passwordHasher.HashPassword(userEntity, password);
         }
     }
 }
