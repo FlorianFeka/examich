@@ -1,4 +1,5 @@
-﻿using Examich.DTO.User;
+﻿using System;
+using Examich.DTO.User;
 using Examich.Interfaces.Entity.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,12 +21,17 @@ namespace Examich.Controllers
             _userRepository = userRepository;
         }
 
-        private string GetUserId()
+        private Guid GetUserId()
         {
-            return User.Claims
+            if (Guid.TryParse(User.Claims
                     .Where(x => x.Type == ClaimTypes.NameIdentifier)
                     .Select(x => x.Value)
-                    .FirstOrDefault();
+                    .FirstOrDefault(), out Guid id))
+            {
+                return id;
+            }
+
+            return Guid.Empty;
         }
 
         [HttpGet]

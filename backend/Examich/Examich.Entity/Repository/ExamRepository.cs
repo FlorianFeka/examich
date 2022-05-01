@@ -24,7 +24,7 @@ namespace Examich.Entity.Repository
 
         }
 
-        public void AddExam(string userId, CreateExamDto createExamDto)
+        public void AddExam(Guid userId, CreateExamDto createExamDto)
         {
             var exam = _mapper.Map<ExamEntity>(createExamDto);
             exam.UserId = userId;
@@ -33,7 +33,7 @@ namespace Examich.Entity.Repository
             _context.SaveChanges();
         }
 
-        public GetExamDto DuplicateExam(string examId, string userId)
+        public GetExamDto DuplicateExam(Guid examId, Guid userId)
         {
             var examToDuplicate = _context.Exams
                 .AsNoTracking()
@@ -42,7 +42,7 @@ namespace Examich.Entity.Repository
             if (examToDuplicate == null) throw new ExamichDbException("Exam not found.");
             if (!_userRepository.UserExists(examToDuplicate.UserId)) throw new ExamichDbException("User not found.");
 
-            examToDuplicate.Id = Guid.NewGuid().ToString();
+            examToDuplicate.Id = Guid.NewGuid();
             examToDuplicate.UserId = userId;
             _context.Exams.Add(examToDuplicate);
             _context.SaveChanges();
@@ -50,7 +50,7 @@ namespace Examich.Entity.Repository
             return _mapper.Map<GetExamDto>(examToDuplicate);
         }
 
-        public GetExamDto GetExamById(string id)
+        public GetExamDto GetExamById(Guid id)
         {
             var exam = _context.Exams.AsNoTracking().FirstOrDefault(x => x.Id == id);
             return _mapper.Map<GetExamDto>(exam);
@@ -65,7 +65,7 @@ namespace Examich.Entity.Repository
             return exams;
         }
 
-        public IEnumerable<GetExamDto> GetExamsByUserId(string userId)
+        public IEnumerable<GetExamDto> GetExamsByUserId(Guid userId)
         {
             var exams = _context.Exams
                 .AsNoTracking()
@@ -74,7 +74,7 @@ namespace Examich.Entity.Repository
             return exams;
         }
 
-        public void UpdateExam(string examId, string userId, UpdateExamDto updateExam)
+        public void UpdateExam(Guid examId, Guid userId, UpdateExamDto updateExam)
         {
             var examToUpdate = _context.Exams.FirstOrDefault(x => x.Id == examId);
             if (examToUpdate == null) throw new ExamichDbException("Exam not found.");
@@ -84,7 +84,7 @@ namespace Examich.Entity.Repository
             _context.SaveChanges();
         }
 
-        public void DeleteExam(string examId, string userId)
+        public void DeleteExam(Guid examId, Guid userId)
         {
             var exam = _context.Exams.FirstOrDefault(x => x.Id == examId);
             if (exam == null) throw new ExamichDbException("Exam not found.");

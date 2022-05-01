@@ -1,4 +1,5 @@
-﻿using Examich.DTO.Exam;
+﻿using System;
+using Examich.DTO.Exam;
 using Examich.Exceptions;
 using Examich.Interfaces.Entity.Repository;
 using Microsoft.AspNetCore.Authorization;
@@ -22,18 +23,22 @@ namespace Examich.Controllers
             _examRepository = examRepository;
         }
 
-        private string GetUserId()
+        private Guid GetUserId()
         {
-            return User.Claims
+            if (Guid.TryParse(User.Claims
                     .Where(x => x.Type == ClaimTypes.NameIdentifier)
                     .Select(x => x.Value)
-                    .FirstOrDefault();
+                    .FirstOrDefault(), out Guid id))
+            {
+                return id;
+            }
+            return Guid.Empty;
         }
 
         [HttpGet("{examId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetExamDto))]
         [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(string))]
-        public IActionResult GetOneExam(string examId)
+        public IActionResult GetOneExam(Guid examId)
         {
             try
             {
@@ -85,7 +90,7 @@ namespace Examich.Controllers
         [HttpPost("Duplicate/{examId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(string))]
-        public IActionResult DuplicateExam(string examId)
+        public IActionResult DuplicateExam(Guid examId)
         {
             try
             {
@@ -103,7 +108,7 @@ namespace Examich.Controllers
         [HttpPut("{examId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(string))]
-        public IActionResult UpdateExam(string examId, [FromBody] UpdateExamDto updateExamDto)
+        public IActionResult UpdateExam(Guid examId, [FromBody] UpdateExamDto updateExamDto)
         {
             try
             {
@@ -122,7 +127,7 @@ namespace Examich.Controllers
         [HttpDelete("{examId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(string))]
-        public IActionResult DeleteExam(string examId)
+        public IActionResult DeleteExam(Guid examId)
         {
             var userId = GetUserId();
             if (userId == null) return Conflict("User does not exist.");

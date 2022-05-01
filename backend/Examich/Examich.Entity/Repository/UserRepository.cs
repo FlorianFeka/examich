@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using Examich.DTO;
 using Examich.DTO.User;
 using Examich.Entity.Data.User;
@@ -22,7 +23,7 @@ namespace Examich.Entity.Repository
             _mapper = mapper;
         }
 
-        public string CreateUser(CreateUserDto user)
+        public Guid CreateUser(CreateUserDto user)
         {
             switch(UserExists(user.Email, user.Username))
             {
@@ -59,7 +60,7 @@ namespace Examich.Entity.Repository
             return userDtos;
         }
 
-        public GetUserDto GetUserById(string id)
+        public GetUserDto GetUserById(Guid id)
         {
             var user = _context.ApplicationUsers.AsNoTracking().FirstOrDefault(x => x.Id == id);
             if (user == null) return null;
@@ -79,7 +80,7 @@ namespace Examich.Entity.Repository
             return count;
         }
 
-        public bool UserExists(string userId)
+        public bool UserExists(Guid userId)
         {
             return _context.ApplicationUsers.Any(x => x.Id == userId);
         }

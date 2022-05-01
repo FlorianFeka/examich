@@ -327,7 +327,7 @@ namespace Examich.Entity.Migrations
                         .HasForeignKey("CreatorId");
 
                     b.HasOne("Examich.Entity.Data.User.UserEntity", "User")
-                        .WithMany("CoppiedExam")
+                        .WithMany("CopiedExam")
                         .HasForeignKey("UserId");
 
                     b.Navigation("Creator");
@@ -407,7 +407,7 @@ namespace Examich.Entity.Migrations
 
             modelBuilder.Entity("Examich.Entity.Data.User.UserEntity", b =>
                 {
-                    b.Navigation("CoppiedExam");
+                    b.Navigation("CopiedExam");
 
                     b.Navigation("CreatedExams");
                 });

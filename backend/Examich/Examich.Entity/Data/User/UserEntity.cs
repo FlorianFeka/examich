@@ -1,14 +1,26 @@
-﻿using Examich.Entity.Data.Exam;
+﻿using System;
+using Examich.Entity.Data.Exam;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
 namespace Examich.Entity.Data.User
 {
-    public class UserEntity : IdentityUser
+    public class UserEntity : IdentityUser<Guid>
     {
+        public UserEntity()
+        {
+            Id = Guid.NewGuid();
+            SecurityStamp = Guid.NewGuid().ToString();
+        }
+
+        public UserEntity(string userName) : this()
+        {
+            UserName = userName;
+        }
+
         public IEnumerable<ExamEntity> CreatedExams { get; set; }
-        public IEnumerable<ExamEntity> CoppiedExam { get; set; }
+        public IEnumerable<ExamEntity> CopiedExam { get; set; }
         //public IEnumerable<ExamUserEntity> ExamUsers { get; set; }
 
         public static void OnModelBuilding(ModelBuilder builder)
@@ -19,9 +31,9 @@ namespace Examich.Entity.Data.User
                 .HasForeignKey(x => x.CreatorId);
 
             builder.Entity<UserEntity>()
-                .HasMany(x => x.CoppiedExam)
+                .HasMany(x => x.CopiedExam)
                 .WithOne(x => x.User)
-                .HasForeignKey(x => x.UserId);
+                .HasForeignKey(x => x.Id);
             //builder.Entity<UserEntity>()
             //    .HasMany(u => u.Exams)
             //    .WithMany(e => e.Users)

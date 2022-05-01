@@ -1,16 +1,17 @@
-﻿using Examich.DTO.Exam;
+﻿using System;
+using Examich.DTO.Exam;
 using System.Collections.Generic;
 
 namespace Examich.Interfaces.Entity.Repository
 {
     public interface IExamRepository
     {
-        void AddExam(string userId, CreateExamDto createExam);
-        void UpdateExam(string examId, string userId, UpdateExamDto updateExam);
+        void AddExam(Guid userId, CreateExamDto createExam);
+        void UpdateExam(Guid examId, Guid userId, UpdateExamDto updateExam);
         IEnumerable<GetExamDto> GetExamsByName(string name);
-        IEnumerable<GetExamDto> GetExamsByUserId(string userId);
-        GetExamDto GetExamById(string id);
-        GetExamDto DuplicateExam(string examId, string userId);
-        void DeleteExam(string examId, string userId);
+        IEnumerable<GetExamDto> GetExamsByUserId(Guid userId);
+        GetExamDto GetExamById(Guid id);
+        GetExamDto DuplicateExam(Guid examId, Guid userId);
+        void DeleteExam(Guid examId, Guid userId);
     }
 }

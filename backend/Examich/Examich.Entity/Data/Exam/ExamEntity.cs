@@ -11,9 +11,9 @@ namespace Examich.Entity.Data.Exam
         public string Name {  get; set; }
         public string Description {  get; set; }
 
-        public string CreatorId { get; set; }
+        public Guid CreatorId { get; set; }
         public UserEntity Creator { get; set; }
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
         public UserEntity User { get; set; }
         public IEnumerable<QuestionEntity> Questions { get; set; }
 

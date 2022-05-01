@@ -1,4 +1,5 @@
-﻿using Examich.Entity.Data.User;
+﻿using System;
+using Examich.Entity.Data.User;
 
 namespace Examich.Entity.Data.Exam
 {
@@ -6,9 +7,9 @@ namespace Examich.Entity.Data.Exam
     {
         public bool IsOwner { get; set; }
 
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
         public UserEntity User { get; set; }
-        public string ExamId { get; set; }
+        public Guid ExamId { get; set; }
         public ExamEntity Exam { get; set; }
     }
 }
