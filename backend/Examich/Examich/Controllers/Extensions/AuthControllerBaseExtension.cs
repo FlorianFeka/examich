@@ -1,11 +1,7 @@
 using System;
 using System.Linq;
 using System.Security.Claims;
-using Examich.Entity.Seed.Seeder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace Examich.Controllers.Extensions
 {
@@ -18,11 +14,11 @@ namespace Examich.Controllers.Extensions
                 .Select(x => x.Value)
                 .FirstOrDefault();
             
-            var env = controllerBase.HttpContext.RequestServices.GetService<IWebHostEnvironment>();
+            /*var env = controllerBase.HttpContext.RequestServices.GetService<IWebHostEnvironment>();
             if (!env.IsProduction())
             {
                 return UserSeeder.TryGetUserId(bearer??"", out userId);
-            }
+            }*/
             
             return Guid.TryParse(bearer
                 , out userId);
