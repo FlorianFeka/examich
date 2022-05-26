@@ -47,9 +47,9 @@ namespace Examich.Entity.Seed.Seeder
             return false;
         }
         
-        public static async Task Seed(ExamichDbContext dbContext)
+        public static async void Seed(ExamichDbContext dbContext)
         {
-            if (dbContext.Users.Any()) return Task.CompletedTask;
+            if (dbContext.Users.Any()) return;
             
             var passwordHasher = new PasswordHasher<UserEntity>();
             var userStore = new UserStore<UserEntity, IdentityRole<Guid>, ExamichDbContext, Guid>(dbContext);
@@ -61,7 +61,7 @@ namespace Examich.Entity.Seed.Seeder
                 result.Wait();
             }
 
-            return await dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
         }
     }
 }

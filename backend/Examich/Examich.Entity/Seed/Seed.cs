@@ -16,8 +16,8 @@ namespace Examich.Entity.Seed
             _context.Database.EnsureCreated();
 
             // SEED HERE
-            await UserSeeder.Seed(_context);
-            await ExamSeeder.Seed(_context);
+            UserSeeder.Seed(_context);
+            ExamSeeder.Seed(_context);
         }
     }
 }
