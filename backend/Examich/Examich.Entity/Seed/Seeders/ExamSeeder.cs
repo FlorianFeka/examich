@@ -15,7 +15,9 @@ namespace Examich.Entity.Seed.Seeder
                 {
                     Name = "Geschichte - Französische Revolution",
                     Description = "Nix besonderes",
-                    CreatorId = UserSeeder.users[0].Id,
+                    // CreatorId = UserSeeder.users[0].Id,
+                    Creator = UserSeeder.users[0],
+                    User = UserSeeder.users[0],
                     Questions  = new QuestionEntity[]
                     {
                         new ()
