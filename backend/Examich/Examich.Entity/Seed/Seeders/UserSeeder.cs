@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Examich.Entity.Data.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -9,7 +10,7 @@ namespace Examich.Entity.Seed.Seeder
 {
     public static class UserSeeder
     {
-        private static readonly List<UserEntity> users = new List<UserEntity>()
+        public static readonly List<UserEntity> users = new ()
         {
             new ()
             {
@@ -46,9 +47,9 @@ namespace Examich.Entity.Seed.Seeder
             return false;
         }
         
-        public static async void Seed(ExamichDbContext dbContext)
+        public static async Task Seed(ExamichDbContext dbContext)
         {
-            if (dbContext.Users.Any()) return;
+            if (dbContext.Users.Any()) return Task.CompletedTask;
             
             var passwordHasher = new PasswordHasher<UserEntity>();
             var userStore = new UserStore<UserEntity, IdentityRole<Guid>, ExamichDbContext, Guid>(dbContext);
@@ -60,7 +61,7 @@ namespace Examich.Entity.Seed.Seeder
                 result.Wait();
             }
 
-            await dbContext.SaveChangesAsync();
+            return await dbContext.SaveChangesAsync();
         }
     }
 }

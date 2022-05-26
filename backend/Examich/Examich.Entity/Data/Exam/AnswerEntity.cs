@@ -1,4 +1,5 @@
-﻿using Examich.Entity.Data.Base;
+﻿using System;
+using Examich.Entity.Data.Base;
 using Microsoft.EntityFrameworkCore;
 
 namespace Examich.Entity.Data.Exam
@@ -8,7 +9,7 @@ namespace Examich.Entity.Data.Exam
         public string Text { get; set; }
         public bool? IsRight { get; set; }
 
-        public string QuestionId { get; set; }
+        public Guid QuestionId { get; set; }
         public QuestionEntity Question { get; set; }
 
         public static new void OnModelBuilding(ModelBuilder builder)

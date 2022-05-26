@@ -11,12 +11,13 @@ namespace Examich.Entity.Seed
             _context = context;
         }
         
-        public void Init()
+        public async void Init()
         {
             _context.Database.EnsureCreated();
 
             // SEED HERE
-            UserSeeder.Seed(_context);
+            await UserSeeder.Seed(_context);
+            await ExamSeeder.Seed(_context);
         }
     }
 }
