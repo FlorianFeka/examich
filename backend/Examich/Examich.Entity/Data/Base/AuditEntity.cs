@@ -12,11 +12,13 @@ namespace Examich.Entity.Data.Base
         {
             builder.Entity<AuditEntity>()
                 .Property(x => x.Created)
+                .HasDefaultValueSql("LOCALTIMESTAMP")
                 .ValueGeneratedOnAdd();
 
             builder.Entity<AuditEntity>()
                 .Property(x => x.Updated)
-                .ValueGeneratedOnUpdate();
+                .HasDefaultValueSql("LOCALTIMESTAMP")
+                .ValueGeneratedOnAddOrUpdate();
         }
     }
 }
