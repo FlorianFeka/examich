@@ -79,7 +79,14 @@ namespace Examich
             services.AddDbContext<ExamichDbContext>(
                 //opt => opt.UseInMemoryDatabase(databaseName: "examich"));
                 //opt => opt.UseSqlServer(Configuration["ConnectionStrings:ExamichDb"]));
-                opt => opt.UseNpgsql(Configuration["ConnectionStrings:ExamichDb"]));
+                opt =>
+                {
+                    opt.UseNpgsql(Configuration["ConnectionStrings:ExamichDb"]);
+                    if (!Environment.IsProduction())
+                    {
+                        opt.EnableSensitiveDataLogging();
+                    }
+                });
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(

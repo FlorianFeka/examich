@@ -11,7 +11,7 @@ namespace Examich.Entity.Seed
             _context = context;
         }
         
-        public async void Init()
+        public void Init()
         {
             _context.Database.EnsureCreated();
 

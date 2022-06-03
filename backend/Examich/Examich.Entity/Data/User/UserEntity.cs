@@ -33,7 +33,7 @@ namespace Examich.Entity.Data.User
             builder.Entity<UserEntity>()
                 .HasMany(x => x.CopiedExam)
                 .WithOne(x => x.User)
-                .HasForeignKey(x => x.Id);
+                .HasForeignKey(x => x.UserId);
             //builder.Entity<UserEntity>()
             //    .HasMany(u => u.Exams)
             //    .WithMany(e => e.Users)
