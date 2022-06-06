@@ -1,4 +1,3 @@
-using System;
 using Examich.Entity;
 using Examich.Configuration.Dependency;
 using FluentValidation.AspNetCore;
@@ -13,16 +12,19 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text;
+using Examich.Entity.Seed;
 
 namespace Examich
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
+            Environment = environment;
         }
 
+        public IWebHostEnvironment Environment { get;  }
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -72,16 +74,35 @@ namespace Examich
 
             services.AddRepositoryConfig();
 
+            services.AddTransient<Seed>();
+
             services.AddDbContext<ExamichDbContext>(
                 //opt => opt.UseInMemoryDatabase(databaseName: "examich"));
                 //opt => opt.UseSqlServer(Configuration["ConnectionStrings:ExamichDb"]));
-                opt => opt.UseNpgsql(Configuration["ConnectionStrings:ExamichDb"]));
+                opt =>
+                {
+                    opt.UseNpgsql(Configuration["ConnectionStrings:ExamichDb"]);
+                    if (!Environment.IsProduction())
+                    {
+                        opt.EnableSensitiveDataLogging();
+                    }
+                });
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(
                 JwtBearerDefaults.AuthenticationScheme, 
                 opt =>
                 {
+                    /*if (!Environment.IsProduction())
+                    {
+                        opt.TokenValidationParameters.ValidateActor = false;
+                        opt.TokenValidationParameters.ValidateAudience = false;
+                        opt.TokenValidationParameters.ValidateIssuer = false;
+                        opt.TokenValidationParameters.ValidateLifetime = false;
+                        opt.TokenValidationParameters.ValidateTokenReplay = false;
+                        opt.TokenValidationParameters.ValidateIssuerSigningKey = false;
+                        opt.SecurityTokenValidators.Clear();
+                    }*/
                     Configuration.Bind("JwtSettings", opt);
                     opt.TokenValidationParameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["IssuerSigningKey"]));
                 });
@@ -92,15 +113,11 @@ namespace Examich
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ExamichDbContext dbContext)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Seed seed)
         {
-            if (!dbContext.Database.EnsureCreated())
+            if (!env.IsProduction())
             {
-                Console.WriteLine("Database was not created");
-            }
-            
-            if (env.IsDevelopment())
-            {
+                seed.Init();
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Examich v1"));

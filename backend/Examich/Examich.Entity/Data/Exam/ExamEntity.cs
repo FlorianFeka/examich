@@ -23,9 +23,9 @@ namespace Examich.Entity.Data.Exam
                 .Property(x => x.Name)
                 .IsRequired();
 
-            builder.Entity<ExamEntity>()
-                .HasIndex(x => new { x.UserId, x.Name })
-                .IsUnique();
+            //builder.Entity<ExamEntity>()
+            //    .HasIndex(x => new { x.UserId, x.Name })
+            //    .IsUnique();
         }
     }
 }

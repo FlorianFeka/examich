@@ -1,4 +1,5 @@
-﻿using Examich.Entity.Data.Base;
+﻿using System;
+using Examich.Entity.Data.Base;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
@@ -8,7 +9,7 @@ namespace Examich.Entity.Data.Exam
     {
         public string Text { get; set; }
 
-        public string ExamId { get; set; }
+        public Guid ExamId { get; set; }
         public ExamEntity Exam { get; set; }
 
         public IEnumerable<AnswerEntity> Answers { get; set; }

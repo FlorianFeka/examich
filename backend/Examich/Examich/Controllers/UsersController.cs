@@ -5,8 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
-using System.Text.Json;
+using Examich.Controllers.Extensions;
 
 namespace Examich.Controllers
 {
@@ -19,19 +18,6 @@ namespace Examich.Controllers
         public UsersController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
-        }
-
-        private Guid GetUserId()
-        {
-            if (Guid.TryParse(User.Claims
-                    .Where(x => x.Type == ClaimTypes.NameIdentifier)
-                    .Select(x => x.Value)
-                    .FirstOrDefault(), out Guid id))
-            {
-                return id;
-            }
-
-            return Guid.Empty;
         }
 
         [HttpGet]
@@ -49,9 +35,14 @@ namespace Examich.Controllers
 
         [Authorize]
         [HttpGet("/Info")]
-        public GetUserDto GetInfo()
+        public IActionResult GetInfo()
         {
-            return _userRepository.GetUserById(GetUserId());
+            if (!this.TryGetUserId(out Guid userId))
+            {
+                return Unauthorized();
+            }
+
+            return Ok(_userRepository.GetUserById(userId));
         }
     }
 }

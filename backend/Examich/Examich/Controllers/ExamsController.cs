@@ -6,8 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
+using Examich.Controllers.Extensions;
 
 namespace Examich.Controllers
 {
@@ -21,18 +20,6 @@ namespace Examich.Controllers
         public ExamsController(IExamRepository examRepository)
         {
             _examRepository = examRepository;
-        }
-
-        private Guid GetUserId()
-        {
-            if (Guid.TryParse(User.Claims
-                    .Where(x => x.Type == ClaimTypes.NameIdentifier)
-                    .Select(x => x.Value)
-                    .FirstOrDefault(), out Guid id))
-            {
-                return id;
-            }
-            return Guid.Empty;
         }
 
         [HttpGet("{examId}")]
@@ -55,9 +42,10 @@ namespace Examich.Controllers
         [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(string))]
         public IActionResult GetAllExamsFromUser()
         {
-            var userId = GetUserId();
-            if (userId == null) return Conflict("User does not exist.");
-
+            if (! this.TryGetUserId(out Guid userId))
+            {
+                return Unauthorized();
+            }
             return Ok(_examRepository.GetExamsByUserId(userId));
         }
 
@@ -74,9 +62,11 @@ namespace Examich.Controllers
         {
             try
             {
-                var userId = GetUserId();
-                if (userId == null) return Conflict("User does not exist.");
 
+                if (!this.TryGetUserId(out Guid userId))
+                {
+                    return Unauthorized();
+                }
                 _examRepository.AddExam(userId, createExamDto);
             }
             catch (ExamichDbException e)
@@ -94,9 +84,10 @@ namespace Examich.Controllers
         {
             try
             {
-                var userId = GetUserId();
-                if (userId == null) return Conflict("User does not exist.");
-
+                if (!this.TryGetUserId(out Guid userId))
+                {
+                    return Unauthorized();
+                }
                 return Ok(_examRepository.DuplicateExam(examId, userId));
             }
             catch (ExamichDbException e)
@@ -112,9 +103,10 @@ namespace Examich.Controllers
         {
             try
             {
-                var userId = GetUserId();
-                if (userId == null) return Conflict("User does not exist.");
-
+                if (!this.TryGetUserId(out Guid userId))
+                {
+                    return Unauthorized();
+                }
                 _examRepository.UpdateExam(examId, userId, updateExamDto);
             }
             catch (ExamichDbException e)
@@ -129,8 +121,11 @@ namespace Examich.Controllers
         [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(string))]
         public IActionResult DeleteExam(Guid examId)
         {
-            var userId = GetUserId();
-            if (userId == null) return Conflict("User does not exist.");
+            if (!this.TryGetUserId(out Guid userId))
+            {
+                return Unauthorized();
+            }
+;
             try
             {
                 _examRepository.DeleteExam(examId, userId);

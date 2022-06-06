@@ -8,8 +8,8 @@ using Examich.Interfaces.Entity.Repository;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Examich.Entity.Repository
 {
@@ -37,18 +37,33 @@ namespace Examich.Entity.Repository
 
             var userEntity = _mapper.Map<UserEntity>(user);
 
-            _context.Users.Add(userEntity);
+                       
+            var userStore = new UserStore<UserEntity, IdentityRole<Guid>, ExamichDbContext, Guid>(_context);
+            var result = userStore.CreateAsync(userEntity);
+            result.Wait();
+
             _context.SaveChanges();
+            
             return userEntity.Id;
         }
 
         public GetUserDto GetUserByEmailAndPassword(string email, string password)
         {
-            using var sha256 = SHA256.Create();
-            var hashedPassword = Encoding.UTF8.GetString(sha256.ComputeHash(Encoding.UTF8.GetBytes(password)));
             var user = _context.ApplicationUsers.AsNoTracking().FirstOrDefault(
-                x => x.Email.ToLower() == email.ToLower() 
-                && x.PasswordHash == hashedPassword);
+                x => x.Email.ToLower() == email.ToLower());
+            if (user != null)
+            {
+                var passwordHasher = new PasswordHasher<UserEntity>();
+                var result = passwordHasher.VerifyHashedPassword(user, user.PasswordHash, password);
+                switch (result)
+                {
+                    case PasswordVerificationResult.Failed:
+                        return null;
+                    case PasswordVerificationResult.SuccessRehashNeeded:
+                        // TODO: Log or Log and rehash password
+                        break;
+                }
+            }
             return _mapper.Map<GetUserDto>(user);
         }
 
