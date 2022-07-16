@@ -20,7 +20,7 @@ namespace Examich.Controllers
             _userRepository = userRepository;
         }
 
-        [HttpGet]
+        [HttpGet("Search")]
         public IEnumerable<GetUserDto> Get(string username = null)
         {
             return _userRepository.GetUserByUsername(username);
@@ -34,7 +34,7 @@ namespace Examich.Controllers
         }
 
         [Authorize]
-        [HttpGet("/Info")]
+        [HttpGet("Info")]
         public IActionResult GetInfo()
         {
             if (!this.TryGetUserId(out Guid userId))
