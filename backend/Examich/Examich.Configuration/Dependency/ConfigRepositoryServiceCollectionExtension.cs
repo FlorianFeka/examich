@@ -10,6 +10,7 @@ namespace Examich.Configuration.Dependency
         {
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IExamRepository, ExamRepository>();
+            services.AddTransient<IQuestionRepository, QuestionRepository>();
 
             return services;
         }

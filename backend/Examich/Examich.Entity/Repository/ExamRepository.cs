@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Examich.Entity.Repository
 {
@@ -21,76 +22,82 @@ namespace Examich.Entity.Repository
             _context = context;
             _userRepository = userRepository;
             _mapper = mapper;
-
         }
 
-        public void AddExam(Guid userId, CreateExamDto createExamDto)
+        public async Task<int> CreateExamAsync(Guid userId, CreateExamDto createExamDto)
         {
             var exam = _mapper.Map<ExamEntity>(createExamDto);
             exam.UserId = userId;
             exam.CreatorId = userId;
-            _context.Exams.Add(exam);
-            _context.SaveChanges();
+            await _context.Exams.AddAsync(exam);
+            return await _context.SaveChangesAsync();
         }
 
-        public GetExamDto DuplicateExam(Guid examId, Guid userId)
+        public async Task<bool> ExamExistsAsync(Guid examId)
         {
-            var examToDuplicate = _context.Exams
+            return await _context.Exams.AnyAsync(e => e.Id == examId);
+        }
+
+        public async Task<GetExamDto> DuplicateExamAsync(Guid examId, Guid userId)
+        {
+            var examToDuplicate = await _context.Exams
                 .AsNoTracking()
-                .FirstOrDefault(x => x.Id == examId);
+                .FirstOrDefaultAsync(x => x.Id == examId);
 
             if (examToDuplicate == null) throw new ExamichDbException("Exam not found.");
-            if (!_userRepository.UserExists(examToDuplicate.UserId)) throw new ExamichDbException("User not found.");
+            if (!await _userRepository.UserExistsAsync(examToDuplicate.UserId)) throw new ExamichDbException("User not found.");
 
             examToDuplicate.Id = Guid.NewGuid();
             examToDuplicate.UserId = userId;
-            _context.Exams.Add(examToDuplicate);
-            _context.SaveChanges();
+            await _context.Exams.AddAsync(examToDuplicate);
+            await _context.SaveChangesAsync();
 
             return _mapper.Map<GetExamDto>(examToDuplicate);
         }
 
-        public GetExamDto GetExamById(Guid id)
+        public async Task<GetExamDto> GetExamByIdAsync(Guid id)
         {
-            var exam = _context.Exams.AsNoTracking().FirstOrDefault(x => x.Id == id);
+            var exam = await _context.Exams.FindAsync(id);
             return _mapper.Map<GetExamDto>(exam);
         }
 
-        public IEnumerable<GetExamDto> GetExamsByName(string name)
+        public async Task<List<GetExamDto>> GetExamsByNameAsync(string name)
         {
-            var exams = _context.Exams
+            var exams = await _context.Exams
                 .AsNoTracking()
                 .Where(x => x.Name.Contains(name))
-                .Select(x => _mapper.Map<GetExamDto>(x));
+                .Select(x => _mapper.Map<GetExamDto>(x))
+                .ToListAsync();
             return exams;
         }
 
-        public IEnumerable<GetExamDto> GetExamsByUserId(Guid userId)
+        public async Task<List<GetExamDto>> GetExamsByUserIdAsync(Guid userId)
         {
-            var exams = _context.Exams
+            var exams = await _context.Exams
                 .AsNoTracking()
                 .Where(x => x.UserId == userId)
-                .Select(x => _mapper.Map<GetExamDto>(x));
+                .Select(x => _mapper.Map<GetExamDto>(x))
+                .ToListAsync();
             return exams;
         }
 
-        public void UpdateExam(Guid examId, Guid userId, UpdateExamDto updateExam)
+        public async Task<int> UpdateExamAsync(Guid examId, Guid userId, UpdateExamDto updateExam)
         {
-            var examToUpdate = _context.Exams.FirstOrDefault(x => x.Id == examId);
+            var examToUpdate = await _context.Exams.FindAsync(examId);
             if (examToUpdate == null) throw new ExamichDbException("Exam not found.");
-            if(examToUpdate.UserId == userId) throw new ExamichDbException("Exam not owned by user.");
+            if (examToUpdate.UserId == userId) throw new ExamichDbException("Exam not owned by user.");
 
             _mapper.Map(updateExam, examToUpdate);
-            _context.SaveChanges();
+            return await _context.SaveChangesAsync();
         }
 
-        public void DeleteExam(Guid examId, Guid userId)
+        public async Task<int> DeleteExamAsync(Guid examId, Guid userId)
         {
-            var exam = _context.Exams.FirstOrDefault(x => x.Id == examId);
+            var exam = await _context.Exams.FindAsync(examId);
             if (exam == null) throw new ExamichDbException("Exam not found.");
             if (exam.UserId != userId) throw new ExamichDbException("Exam not owned by user.");
             _context.Exams.Remove(exam);
-            _context.SaveChanges();
+            return await _context.SaveChangesAsync();
         }
     }
 }

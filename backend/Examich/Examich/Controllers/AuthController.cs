@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Examich.Controllers
 {
@@ -26,11 +27,11 @@ namespace Examich.Controllers
         }
 
         [HttpPost("Register")]
-        public IActionResult Register([FromBody] CreateUserDto userDto)
+        public async Task<IActionResult> Register([FromBody] CreateUserDto userDto)
         {
             try
             {
-                var id = _userRepository.CreateUser(userDto);
+                var id = await _userRepository.CreateUserAsync(userDto);
                 return Created("https://localhost:5001/users", new { id });
             }
             catch (ExamichDbException e)
@@ -40,9 +41,9 @@ namespace Examich.Controllers
         }
 
         [HttpPost("Login")]
-        public IActionResult Login(LoginDto login)
+        public async Task<IActionResult> Login(LoginDto login)
         {
-            var user = _userRepository.GetUserByEmailAndPassword(login.Email, login.Password);
+            var user = await _userRepository.GetUserByEmailAndPasswordAsync(login.Email, login.Password);
             if(user == null)
                 return Unauthorized();
 

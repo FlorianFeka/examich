@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Examich.Controllers.Extensions;
 
 namespace Examich.Controllers
@@ -21,9 +22,9 @@ namespace Examich.Controllers
         }
 
         [HttpGet("Search")]
-        public IEnumerable<GetUserDto> Get(string username = null)
+        public async Task<List<GetUserDto>> Get(string username = null)
         {
-            return _userRepository.GetUserByUsername(username);
+            return await _userRepository.GetUserByUsernameAsync(username);
         }
 
         [Authorize]
@@ -35,14 +36,14 @@ namespace Examich.Controllers
 
         [Authorize]
         [HttpGet("Info")]
-        public IActionResult GetInfo()
+        public async Task<IActionResult> GetInfo()
         {
             if (!this.TryGetUserId(out Guid userId))
             {
                 return Unauthorized();
             }
 
-            return Ok(_userRepository.GetUserById(userId));
+            return Ok(await _userRepository.GetUserByIdAsync(userId));
         }
     }
 }

@@ -24,6 +24,7 @@ namespace Examich.Entity
 
             UserEntity.OnModelBuilding(modelBuilder);
             ExamEntity.OnModelBuilding(modelBuilder);
+            AnswerEntity.OnModelBuilding(modelBuilder);
         }
     }
 }

@@ -8,6 +8,7 @@ using Examich.Interfaces.Entity.Repository;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
@@ -23,9 +24,9 @@ namespace Examich.Entity.Repository
             _mapper = mapper;
         }
 
-        public Guid CreateUser(CreateUserDto user)
+        public async Task<Guid> CreateUserAsync(CreateUserDto user)
         {
-            switch(UserExists(user.Email, user.Username))
+            switch(await UserExistsAsync(user.Email, user.Username))
             {
                 case 1:
                     throw new ExamichDbException($"User with email '{user.Email}' already exists.");
@@ -39,17 +40,16 @@ namespace Examich.Entity.Repository
 
                        
             var userStore = new UserStore<UserEntity, IdentityRole<Guid>, ExamichDbContext, Guid>(_context);
-            var result = userStore.CreateAsync(userEntity);
-            result.Wait();
+            await userStore.CreateAsync(userEntity);
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             
             return userEntity.Id;
         }
 
-        public GetUserDto GetUserByEmailAndPassword(string email, string password)
+        public async Task<GetUserDto> GetUserByEmailAndPasswordAsync(string email, string password)
         {
-            var user = _context.ApplicationUsers.AsNoTracking().FirstOrDefault(
+            var user = await _context.ApplicationUsers.AsNoTracking().FirstOrDefaultAsync(
                 x => x.Email.ToLower() == email.ToLower());
             if (user != null)
             {
@@ -67,17 +67,18 @@ namespace Examich.Entity.Repository
             return _mapper.Map<GetUserDto>(user);
         }
 
-        public IEnumerable<GetUserDto> GetUserByUsername(string username)
+        public async Task<List<GetUserDto>> GetUserByUsernameAsync(string username)
         {
-            var userDtos = _context.ApplicationUsers.AsNoTracking().Where(
+            var userDtos = await _context.ApplicationUsers.AsNoTracking().Where(
                 x => x.UserName.ToLower().Contains(username.ToLower()))
-                .Select(x => _mapper.Map<GetUserDto>(x));
+                .Select(x => _mapper.Map<GetUserDto>(x))
+                .ToListAsync();
             return userDtos;
         }
 
-        public GetUserDto GetUserById(Guid id)
+        public async Task<GetUserDto> GetUserByIdAsync(Guid id)
         {
-            var user = _context.ApplicationUsers.AsNoTracking().FirstOrDefault(x => x.Id == id);
+            var user = await _context.ApplicationUsers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
             if (user == null) return null;
             return new GetUserDto()
             {
@@ -87,17 +88,17 @@ namespace Examich.Entity.Repository
             };
         }
 
-        private int UserExists(string email, string username)
+        private async Task<int> UserExistsAsync(string email, string username)
         {
             int count = 0;
-            count += _context.ApplicationUsers.AsNoTracking().Where(x => x.Email == email ).Any() ? 1 : 0;
-            count += _context.ApplicationUsers.AsNoTracking().Where(x => x.UserName == username).Any() ? 2 : 0;
+            count += await _context.ApplicationUsers.AsNoTracking().Where(x => x.Email == email ).AnyAsync() ? 1 : 0;
+            count += await _context.ApplicationUsers.AsNoTracking().Where(x => x.UserName == username).AnyAsync() ? 2 : 0;
             return count;
         }
 
-        public bool UserExists(Guid userId)
+        public async Task<bool> UserExistsAsync(Guid userId)
         {
-            return _context.ApplicationUsers.Any(x => x.Id == userId);
+            return await _context.ApplicationUsers.AnyAsync(x => x.Id == userId);
         }
     }
 }
