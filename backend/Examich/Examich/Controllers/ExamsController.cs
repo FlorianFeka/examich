@@ -2,6 +2,7 @@
 using Examich.DTO.Exam;
 using Examich.Entity.Repository;
 using Examich.Exceptions;
+using Examich.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,10 +18,12 @@ namespace Examich.Controllers
     public class ExamsController : ControllerBase
     {
         private readonly IExamRepository _examRepository;
+        private readonly IPdfCreator _pdfCreator;
 
-        public ExamsController(IExamRepository examRepository)
+        public ExamsController(IExamRepository examRepository, IPdfCreator pdfCreator)
         {
             _examRepository = examRepository;
+            _pdfCreator = pdfCreator;
         }
 
         #region EXAM ENDPOINTS
@@ -138,12 +141,21 @@ namespace Examich.Controllers
             return Ok();
         }
 
-        [HttpGet("{examId}/PDF")]
+        [HttpPost("{examId}/PDF")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(string))]
-        public IActionResult ExportExamToPdf(Guid examid)
+        public async Task<IActionResult> ExportExamToPdf(Guid examId, bool markAnswers)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var file = await _pdfCreator.GeneratePdfAsync(examId, markAnswers);
+                var exam = await _examRepository.GetExamInfoByIdAsync(examId);
+                return Ok(File(file, "application/octet-stream", $"{exam.Name}.pdf"));
+            }
+            catch (ExamichDbException e)
+            {
+                return Conflict(e.Message);
+            }
         }
         #endregion
     }

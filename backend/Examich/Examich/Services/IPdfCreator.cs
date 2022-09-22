@@ -1,7 +1,10 @@
-﻿namespace Examich.Services
+﻿using System;
+using System.Threading.Tasks;
+
+namespace Examich.Services
 {
-    public class IPdfCreator
+    public interface IPdfCreator
     {
-        
+        Task<byte[]> GeneratePdfAsync(Guid examId, bool markAnswers);
     }
 }
