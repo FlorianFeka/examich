@@ -60,14 +60,14 @@ namespace Examich.Entity.Repository
             return _mapper.Map<GetExamDto>(exam);
         }
 
-        public async Task<List<ExamEntity>> GetExamByIdAsync(Guid id)
+        public async Task<ExamEntity> GetExamByIdAsync(Guid id)
         {
             return await _context.Exams
                 .Include(x => x.Questions)
                 .ThenInclude(x => x.Answers)
                 .Where(x => x.Id == id)
                 .AsNoTracking()
-                .ToListAsync();
+                .FirstOrDefaultAsync();
         }
 
         public async Task<List<GetExamDto>> GetExamsByNameAsync(string name)

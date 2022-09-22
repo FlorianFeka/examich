@@ -2,6 +2,7 @@
 using Examich.DTO.Exam;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Examich.Entity.Data.Exam;
 
 namespace Examich.Entity.Repository
 {
@@ -13,6 +14,7 @@ namespace Examich.Entity.Repository
         Task<List<GetExamDto>> GetExamsByNameAsync(string name);
         Task<List<GetExamDto>> GetExamsByUserIdAsync(Guid userId);
         Task<GetExamDto> GetExamInfoByIdAsync(Guid id);
+        Task<ExamEntity> GetExamByIdAsync(Guid id);
         Task<GetExamDto> DuplicateExamAsync(Guid examId, Guid userId);
         Task<int> DeleteExamAsync(Guid examId, Guid userId);
     }
