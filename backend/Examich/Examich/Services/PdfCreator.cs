@@ -1,12 +1,12 @@
-﻿using Examich.Exceptions;
-using Examich.Interfaces.Entity.Repository;
+﻿using Examich.Entity.Repository;
+using Examich.Exceptions;
 using QuestPDF.Fluent;
 using System;
 using System.Threading.Tasks;
 
 namespace Examich.Services
 {
-    public class PdfCreator
+    public class PdfCreator : IPdfCreator
     {
         private readonly IExamRepository _examRepository;
         public PdfCreator(IExamRepository examRepository)

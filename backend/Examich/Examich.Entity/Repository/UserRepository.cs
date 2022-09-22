@@ -1,16 +1,15 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using Examich.DTO;
 using Examich.DTO.User;
 using Examich.Entity.Data.User;
 using Examich.Exceptions;
-using Examich.Interfaces.Entity.Repository;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Examich.Entity.Repository
 {

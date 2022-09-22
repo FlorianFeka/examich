@@ -1,5 +1,4 @@
 ﻿using Examich.Entity.Repository;
-using Examich.Interfaces.Entity.Repository;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Examich.Configuration.Dependency

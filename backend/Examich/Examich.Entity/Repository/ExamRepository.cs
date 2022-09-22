@@ -2,7 +2,6 @@
 using Examich.DTO.Exam;
 using Examich.Entity.Data.Exam;
 using Examich.Exceptions;
-using Examich.Interfaces.Entity.Repository;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

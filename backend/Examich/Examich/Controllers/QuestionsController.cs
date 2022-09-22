@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Examich.Controllers.Extensions;
+﻿using Examich.Controllers.Extensions;
 using Examich.DTO.Question;
+using Examich.Entity.Repository;
 using Examich.Exceptions;
-using Examich.Interfaces.Entity.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Examich.Controllers
 {

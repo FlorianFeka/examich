@@ -1,5 +1,7 @@
-using Examich.Entity;
 using Examich.Configuration.Dependency;
+using Examich.Entity;
+using Examich.Entity.Seed;
+using Examich.Services;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -12,7 +14,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text;
-using Examich.Entity.Seed;
 
 namespace Examich
 {
@@ -73,6 +74,8 @@ namespace Examich
             });
 
             services.AddRepositoryConfig();
+
+            services.AddTransient<IPdfCreator, PdfCreator>();
 
             services.AddTransient<Seed>();
 

@@ -1,6 +1,6 @@
 ﻿using Examich.DTO;
+using Examich.Entity.Repository;
 using Examich.Exceptions;
-using Examich.Interfaces.Entity.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;

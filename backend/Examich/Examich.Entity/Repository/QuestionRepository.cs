@@ -1,13 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using Examich.DTO.Question;
 using Examich.Entity.Data.Exam;
 using Examich.Exceptions;
-using Examich.Interfaces.Entity.Repository;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Examich.Entity.Repository
 {
