@@ -1,7 +1,6 @@
 ﻿using System;
 using Examich.Entity.Data.Base;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Examich.Entity.Data.Exam
 {
@@ -25,8 +24,7 @@ namespace Examich.Entity.Data.Exam
                 .HasForeignKey(a => a.QuestionId);
 
             builder.Entity<AnswerEntity>()
-                .Property(a => a.IsRight)
-                .HasDefaultValue(false);
+                .Property(a => a.IsRight);
         }
     }
 }

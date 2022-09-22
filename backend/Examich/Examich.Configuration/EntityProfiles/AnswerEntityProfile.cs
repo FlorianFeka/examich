@@ -10,8 +10,7 @@ namespace Examich.Configuration.EntityProfiles
         {
             CreateMap<CreateAnswerDTO, AnswerEntity>()
                 .ForMember(x => x.Text, opt => opt.MapFrom(x => x.Text))
-                .ForMember(x => x.IsRight, opt => opt.MapFrom(x => x.IsRight))
-                ;
+                .ForMember(x => x.IsRight, opt => opt.MapFrom(x => x.IsRight));
         }
     }
 }

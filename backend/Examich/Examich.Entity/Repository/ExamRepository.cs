@@ -55,10 +55,20 @@ namespace Examich.Entity.Repository
             return _mapper.Map<GetExamDto>(examToDuplicate);
         }
 
-        public async Task<GetExamDto> GetExamByIdAsync(Guid id)
+        public async Task<GetExamDto> GetExamInfoByIdAsync(Guid id)
         {
             var exam = await _context.Exams.FindAsync(id);
             return _mapper.Map<GetExamDto>(exam);
+        }
+
+        public async Task<List<ExamEntity>> GetExamByIdAsync(Guid id)
+        {
+            return await _context.Exams
+                .Include(x => x.Questions)
+                .ThenInclude(x => x.Answers)
+                .Where(x => x.Id == id)
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<List<GetExamDto>> GetExamsByNameAsync(string name)

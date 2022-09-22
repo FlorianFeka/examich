@@ -32,21 +32,6 @@ namespace Examich.Entity.Seed.Seeder
                 Email = "admin@gmail.com",
             },
         };
-
-        public static bool TryGetUserId(string bearerName, out Guid id)
-        {
-            id = Guid.Empty;
-            foreach (var user in users)
-            {
-                if (String.Equals(user.UserName, bearerName, StringComparison.CurrentCultureIgnoreCase))
-                {
-                    id = user.Id;
-                    return true;
-                }
-            }
-
-            return false;
-        }
         
         public static async void Seed(ExamichDbContext dbContext)
         {

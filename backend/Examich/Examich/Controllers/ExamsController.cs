@@ -7,9 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Examich.Configuration.EntityProfiles;
 using Examich.Controllers.Extensions;
-using Examich.DTO.Question;
 
 namespace Examich.Controllers
 {
@@ -19,12 +17,10 @@ namespace Examich.Controllers
     public class ExamsController : ControllerBase
     {
         private readonly IExamRepository _examRepository;
-        private readonly IQuestionRepository _questionRepository;
 
-        public ExamsController(IExamRepository examRepository, IQuestionRepository questionRepository)
+        public ExamsController(IExamRepository examRepository)
         {
             _examRepository = examRepository;
-            _questionRepository = questionRepository;
         }
 
         #region EXAM ENDPOINTS
@@ -35,7 +31,7 @@ namespace Examich.Controllers
         {
             try
             {
-                return Ok(await _examRepository.GetExamByIdAsync(examId));
+                return Ok(await _examRepository.GetExamInfoByIdAsync(examId));
             } 
             catch(ExamichDbException e)
             {
@@ -48,7 +44,7 @@ namespace Examich.Controllers
         [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(string))]
         public async Task<IActionResult> GetAllExamsFromUser()
         {
-            if (! this.TryGetUserId(out Guid userId))
+            if (!this.TryGetUserId(out Guid userId))
             {
                 return Unauthorized();
             }
@@ -130,7 +126,7 @@ namespace Examich.Controllers
             {
                 return Unauthorized();
             }
-;
+
             try
             {
                 await _examRepository.DeleteExamAsync(examId, userId);
@@ -141,45 +137,13 @@ namespace Examich.Controllers
             }
             return Ok();
         }
-        #endregion
 
-        #region EXAM QUESTIONS ENDPOINTS
-
-        [HttpGet("{examId}/question/{questionId}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetQuestionDTO))]
-        [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(string))]
-        public async Task<IActionResult> GetOneQuestion(Guid examId, Guid questionId)
-        {
-            try
-            {
-                return Ok(await _questionRepository.GetQuestionByIdAsync(questionId));
-            }
-            catch (ExamichDbException e)
-            {
-                return Conflict(e.Message);
-            }
-        }
-        
-        
-        [HttpPost("{examId}/question")]
+        [HttpGet("{examId}/PDF")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(string))]
-        
-        public async Task<IActionResult> CreateQuestion([FromRoute] Guid examId, [FromBody] CreateQuestionDTO createQuestionDto)
+        public IActionResult ExportExamToPdf(Guid examid)
         {
-            try
-            {
-                if (!this.TryGetUserId(out Guid userId))
-                {
-                    return Unauthorized();
-                }
-                await _questionRepository.CreateQuestionAsync(examId, createQuestionDto);
-            }
-            catch (ExamichDbException e)
-            {
-                return Conflict(e.Message);
-            }
-            return Ok();
+            throw new NotImplementedException();
         }
         #endregion
     }

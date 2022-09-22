@@ -12,7 +12,7 @@ namespace Examich.Interfaces.Entity.Repository
         Task<int> UpdateExamAsync(Guid examId, Guid userId, UpdateExamDto updateExam);
         Task<List<GetExamDto>> GetExamsByNameAsync(string name);
         Task<List<GetExamDto>> GetExamsByUserIdAsync(Guid userId);
-        Task<GetExamDto> GetExamByIdAsync(Guid id);
+        Task<GetExamDto> GetExamInfoByIdAsync(Guid id);
         Task<GetExamDto> DuplicateExamAsync(Guid examId, Guid userId);
         Task<int> DeleteExamAsync(Guid examId, Guid userId);
     }
