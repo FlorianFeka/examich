@@ -24,6 +24,8 @@ namespace Examich.Services
         {
             if (!await _examRepository.ExamExistsAsync(examId)) throw new ExamichDbException("Exam does not exist.");
             var exam = await _examRepository.GetExamByIdAsync(examId);
+            QuestPDF.Settings.DocumentLayoutExceptionThreshold = 2000;
+
             return Document.Create(container =>
                 {
                     container.Page(page =>
@@ -31,6 +33,8 @@ namespace Examich.Services
                         page.Size(PageSizes.A4);
                         page.Margin(2, Unit.Centimetre);
                         page.PageColor(Colors.White);
+
+                        page.Header().AlignTop().AlignRight().Image("Assets/logo.png");
 
                         page.Content()
                             .PaddingVertical(1, Unit.Centimetre)

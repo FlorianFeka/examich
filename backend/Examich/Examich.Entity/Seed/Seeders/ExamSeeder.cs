@@ -1,9 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using Bogus;
 using Examich.Entity.Data.Exam;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Examich.Entity.Seed.Seeder
 {
@@ -16,16 +14,17 @@ namespace Examich.Entity.Seed.Seeder
             var exams = new List<ExamEntity>();
             var users = UserSeeder.GetTestUsers(dbContext);
 
+
             var f = new Faker("en");
-            for (int i = 0; i < 250; i++)
+            for (int i = 0; i < 10; i++)
             {
                 var questions = new List<QuestionEntity>();
 
-                for (int j = 0; j < f.Random.Number(4, 8); j++)
+                for (int j = 0; j < f.Random.Number(3000, 3500); j++)
                 {
                     var answers = new List<AnswerEntity>();
 
-                    for (int l = 0; l < f.Random.Number(2, 6); l++)
+                    for (int l = 0; l < f.Random.Number(4, 6); l++)
                     {
                         answers.Add(
                             new AnswerEntity()

@@ -36,4 +36,10 @@
     <ProjectReference Include="..\Examich.Exceptions\Examich.Exceptions.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Assets\logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
