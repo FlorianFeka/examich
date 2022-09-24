@@ -59,7 +59,7 @@ namespace Examich.Controllers
             var token = new JwtSecurityToken(
                 issuer: _configuration["JwtSettings:TokenValidationParameters:ValidIssuer"],
                 audience: _configuration["JwtSettings:TokenValidationParameters:ValidAudience"],
-                expires: DateTime.Now.AddHours(1),
+                expires: DateTime.Now.AddYears(1),
                 claims: claims,
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                 );

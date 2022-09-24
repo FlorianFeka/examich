@@ -144,7 +144,7 @@ namespace Examich.Controllers
         [HttpPost("{examId}/PDF")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(string))]
-        public async Task<IActionResult> ExportExamToPdf(Guid examId, bool markAnswers)
+        public async Task<IActionResult> ExportExamToPdf(Guid examId, [FromQuery] bool markAnswers)
         {
             try
             {

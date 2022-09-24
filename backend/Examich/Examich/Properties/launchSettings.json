@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Examich": {
+    "w/ Browser": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
@@ -34,7 +34,7 @@
       },
       "dotnetRunMessages": "true"
     },
-    "prod": {
+    "Production": {
       "commandName": "Project",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Production"
