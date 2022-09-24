@@ -16,11 +16,11 @@ namespace Examich.Entity.Seed.Seeder
 
 
             var f = new Faker("en");
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 2; i++)
             {
                 var questions = new List<QuestionEntity>();
 
-                for (int j = 0; j < f.Random.Number(3000, 3500); j++)
+                for (int j = 0; j < f.Random.Number(11000, 11500); j++)
                 {
                     var answers = new List<AnswerEntity>();
 
@@ -41,15 +41,16 @@ namespace Examich.Entity.Seed.Seeder
                         Answers = answers
                     });
                 }
-                
+                var user = users[i];
                 exams.Add(new ExamEntity()
                 {
+                    Id = user.Id,
                     Name = string.Join(" ", f.Lorem.Words(f.Random.Number(3, 6))),
                     Description = string.Join(" ", f.Lorem.Words(f.Random.Number(6, 16))),
-                    Creator = users[f.Random.Number(0, 2)],
-                    User = users[f.Random.Number(0, 2)],
+                    Creator = user,
+                    User = user,
                     Questions = questions,
-                });
+                }); ;
 
             }
 
