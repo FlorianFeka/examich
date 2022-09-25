@@ -4,14 +4,20 @@ const TOKEN =
 
 export default function () {
   const url =
-    "http://localhost:5000/api/Exam/00000000-0000-0000-0000-000000000002/PDF?markAnswers=true";
+    "http://localhost:5000/api/Exams/00000000-0000-0000-0000-000000000002/PDF?markAnswers=true";
 
   const params = {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${TOKEN}`,
     },
+    timeout: "3600s",
+    thresholds: {
+      http_req_failed: ['rate<0.01'], // http errors should be less than 1%
+      http_req_duration: ['p(0)<3600000'], // 95% of requests should be below 1h
+    },
   };
 
-  http.post(url, null, params);
+  const a = http.post(url, null, params);
+  console.log(a.status);
 }
