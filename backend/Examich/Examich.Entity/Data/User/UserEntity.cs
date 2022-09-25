@@ -28,12 +28,14 @@ namespace Examich.Entity.Data.User
             builder.Entity<UserEntity>()
                 .HasMany(x => x.CreatedExams)
                 .WithOne(x => x.Creator)
-                .HasForeignKey(x => x.CreatorId);
+                .HasForeignKey(x => x.CreatorId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<UserEntity>()
                 .HasMany(x => x.CopiedExam)
                 .WithOne(x => x.User)
-                .HasForeignKey(x => x.UserId);
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
             //builder.Entity<UserEntity>()
             //    .HasMany(u => u.Exams)
             //    .WithMany(e => e.Users)

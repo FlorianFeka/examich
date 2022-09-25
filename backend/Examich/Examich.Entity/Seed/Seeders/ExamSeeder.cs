@@ -16,7 +16,7 @@ namespace Examich.Entity.Seed.Seeder
 
 
             var f = new Faker("en");
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 3; i++)
             {
                 var questions = new List<QuestionEntity>();
 

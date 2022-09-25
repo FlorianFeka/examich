@@ -24,7 +24,7 @@ namespace Examich.Services
         {
             if (!await _examRepository.ExamExistsAsync(examId)) throw new ExamichDbException("Exam does not exist.");
             var exam = await _examRepository.GetExamByIdAsync(examId);
-            QuestPDF.Settings.DocumentLayoutExceptionThreshold = 2000;
+            QuestPDF.Settings.DocumentLayoutExceptionThreshold = 10000;
 
             return Document.Create(container =>
                 {

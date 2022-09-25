@@ -79,12 +79,12 @@ namespace Examich
 
             services.AddTransient<Seed>();
 
-            services.AddDbContext<ExamichDbContext>(
+            services.AddDbContextPool<ExamichDbContext>(
                 //opt => opt.UseInMemoryDatabase(databaseName: "examich"));
                 //opt => opt.UseSqlServer(Configuration["ConnectionStrings:ExamichDb"]));
                 opt =>
                 {
-                    opt.UseNpgsql(Configuration["ConnectionStrings:ExamichDb"]);
+                    opt.UseSqlServer(Configuration["ConnectionStrings:ExamichDb"]);
                     if (!Environment.IsProduction())
                     {
                         opt.EnableSensitiveDataLogging();
