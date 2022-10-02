@@ -8,8 +8,6 @@ namespace Examich.Configuration.Dependency
         public static IServiceCollection AddRepositoryConfig(this IServiceCollection services)
         {
             services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<IExamRepository, ExamRepository>();
-            services.AddTransient<IQuestionRepository, QuestionRepository>();
 
             return services;
         }

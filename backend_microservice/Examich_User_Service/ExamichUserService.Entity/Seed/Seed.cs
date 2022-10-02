@@ -17,7 +17,6 @@ namespace Examich.Entity.Seed
 
             // SEED HERE
             UserSeeder.Seed(_context);
-            ExamSeeder.Seed(_context);
         }
     }
 }

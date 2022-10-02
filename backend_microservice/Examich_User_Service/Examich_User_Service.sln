@@ -13,8 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamichUserService.Entity",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamichUserService.Exceptions", "ExamichUserService.Exceptions\ExamichUserService.Exceptions.csproj", "{F7FC7AA6-75EA-408F-BCB7-E0BF2875C66F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamichUserService.Interfaces", "ExamichUserService.Interfaces\ExamichUserService.Interfaces.csproj", "{1F0A837E-7D41-46EE-B7A1-3CDECECA85BA}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -88,17 +86,5 @@ Global
 		{F7FC7AA6-75EA-408F-BCB7-E0BF2875C66F}.Release|x64.Build.0 = Release|Any CPU
 		{F7FC7AA6-75EA-408F-BCB7-E0BF2875C66F}.Release|x86.ActiveCfg = Release|Any CPU
 		{F7FC7AA6-75EA-408F-BCB7-E0BF2875C66F}.Release|x86.Build.0 = Release|Any CPU
-		{1F0A837E-7D41-46EE-B7A1-3CDECECA85BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1F0A837E-7D41-46EE-B7A1-3CDECECA85BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1F0A837E-7D41-46EE-B7A1-3CDECECA85BA}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{1F0A837E-7D41-46EE-B7A1-3CDECECA85BA}.Debug|x64.Build.0 = Debug|Any CPU
-		{1F0A837E-7D41-46EE-B7A1-3CDECECA85BA}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{1F0A837E-7D41-46EE-B7A1-3CDECECA85BA}.Debug|x86.Build.0 = Debug|Any CPU
-		{1F0A837E-7D41-46EE-B7A1-3CDECECA85BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1F0A837E-7D41-46EE-B7A1-3CDECECA85BA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1F0A837E-7D41-46EE-B7A1-3CDECECA85BA}.Release|x64.ActiveCfg = Release|Any CPU
-		{1F0A837E-7D41-46EE-B7A1-3CDECECA85BA}.Release|x64.Build.0 = Release|Any CPU
-		{1F0A837E-7D41-46EE-B7A1-3CDECECA85BA}.Release|x86.ActiveCfg = Release|Any CPU
-		{1F0A837E-7D41-46EE-B7A1-3CDECECA85BA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
