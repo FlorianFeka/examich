@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Examich.DTO.User;
-using Examich.Entity.Data.User;
+using ExamichUserService.DTO.User;
+using ExamichUserService.Entity.Data.User;
 
-namespace Examich.Configuration.DtoProfiles
+namespace ExamichUserService.Configuration.DtoProfiles
 {
     public class UserDtoProfile : Profile
     {

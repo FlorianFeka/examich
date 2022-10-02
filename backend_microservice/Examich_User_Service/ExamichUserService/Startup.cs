@@ -1,6 +1,6 @@
-using Examich.Configuration.Dependency;
-using Examich.Entity;
-using Examich.Entity.Seed;
+using ExamichUserService.Configuration.Dependency;
+using ExamichUserService.Entity;
+using ExamichUserService.Entity.Seed;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -14,7 +14,7 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text;
 
-namespace Examich
+namespace ExamichUserService
 {
     public class Startup
     {
@@ -44,7 +44,7 @@ namespace Examich
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Examich", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ExamichUserService", Version = "v1" });
 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
@@ -76,12 +76,12 @@ namespace Examich
 
             services.AddTransient<Seed>();
 
-            services.AddDbContextPool<ExamichDbContext>(
+            services.AddDbContextPool<ExamichUserServiceDbContext>(
                 //opt => opt.UseInMemoryDatabase(databaseName: "examich"));
-                //opt => opt.UseSqlServer(Configuration["ConnectionStrings:ExamichDb"]));
+                //opt => opt.UseSqlServer(Configuration["ConnectionStrings:ExamichUserServiceDb"]));
                 opt =>
                 {
-                    opt.UseSqlServer(Configuration["ConnectionStrings:ExamichDb"]);
+                    opt.UseSqlServer(Configuration["ConnectionStrings:ExamichUserServiceDb"]);
                     if (!Environment.IsProduction())
                     {
                         opt.EnableSensitiveDataLogging();
@@ -107,9 +107,9 @@ namespace Examich
                     opt.TokenValidationParameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["IssuerSigningKey"]));
                 });
 
-            services.AddAutoMapper(Assembly.GetAssembly(typeof(Examich.Configuration.Base)));
+            services.AddAutoMapper(Assembly.GetAssembly(typeof(ExamichUserService.Configuration.Base)));
 
-            services.AddFluentValidation(conf => conf.RegisterValidatorsFromAssemblyContaining<Examich.Configuration.Base>());
+            services.AddFluentValidation(conf => conf.RegisterValidatorsFromAssemblyContaining<ExamichUserService.Configuration.Base>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -120,7 +120,7 @@ namespace Examich
                 seed.Init();
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Examich v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ExamichUserService v1"));
             }
 
             //app.UseHttpsRedirection();

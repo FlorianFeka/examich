@@ -1,7 +1,7 @@
-﻿using Examich.DTO;
+﻿using ExamichUserService.DTO;
 using FluentValidation;
 
-namespace Examich.Configuration.Validation
+namespace ExamichUserService.Configuration.Validation
 {
     public class CreateUserDtoValidator : AbstractValidator<CreateUserDto>
     {

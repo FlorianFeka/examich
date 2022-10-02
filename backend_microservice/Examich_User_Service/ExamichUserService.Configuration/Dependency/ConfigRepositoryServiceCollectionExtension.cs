@@ -1,7 +1,7 @@
-﻿using Examich.Entity.Repository;
+﻿using ExamichUserService.Entity.Repository;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Examich.Configuration.Dependency
+namespace ExamichUserService.Configuration.Dependency
 {
     public static class ConfigRepositoryServiceCollectionExtension
     {

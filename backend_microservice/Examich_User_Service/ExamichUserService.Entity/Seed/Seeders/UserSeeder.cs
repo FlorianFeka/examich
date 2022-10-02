@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Examich.Entity.Data.User;
+using ExamichUserService.Entity.Data.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-namespace Examich.Entity.Seed.Seeder
+namespace ExamichUserService.Entity.Seed.Seeder
 {
     public static class UserSeeder
     {
@@ -33,12 +33,12 @@ namespace Examich.Entity.Seed.Seeder
             },
         };
         
-        public static async void Seed(ExamichDbContext dbContext)
+        public static async void Seed(ExamichUserServiceDbContext dbContext)
         {
             if (dbContext.Users.Any()) return;
             
             var passwordHasher = new PasswordHasher<UserEntity>();
-            var userStore = new UserStore<UserEntity, IdentityRole<Guid>, ExamichDbContext, Guid>(dbContext);
+            var userStore = new UserStore<UserEntity, IdentityRole<Guid>, ExamichUserServiceDbContext, Guid>(dbContext);
             
             foreach (var user in users)
             {
@@ -50,7 +50,7 @@ namespace Examich.Entity.Seed.Seeder
             await dbContext.SaveChangesAsync();
         }
 
-        public static List<UserEntity> GetTestUsers(ExamichDbContext dbContext)
+        public static List<UserEntity> GetTestUsers(ExamichUserServiceDbContext dbContext)
         {
             return dbContext.Users.Where(u =>
                 new List<String> { $"{GUID_ZEROS}1", $"{GUID_ZEROS}2", $"{GUID_ZEROS}3" }

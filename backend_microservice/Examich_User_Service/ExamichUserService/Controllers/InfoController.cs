@@ -1,6 +1,6 @@
-﻿using Examich.Controllers.Extensions;
-using Examich.DTO.User;
-using Examich.Entity.Repository;
+﻿using ExamichUserService.Controllers.Extensions;
+using ExamichUserService.DTO.User;
+using ExamichUserService.Entity.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Examich.Controllers
+namespace ExamichUserService.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 
-namespace Examich.Entity.Data.Base
+namespace ExamichUserService.Entity.Data.Base
 {
     public class AuditEntity : BaseEntity
     {

@@ -1,4 +1,4 @@
-﻿namespace Examich.Interfaces.App.Services
+﻿namespace ExamichUserService.Interfaces.App.Services
 {
     public class IPdfCreator
     {

@@ -1,16 +1,16 @@
 ﻿using System;
-using Examich.Entity.Data.User;
+using ExamichUserService.Entity.Data.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Examich.Entity
+namespace ExamichUserService.Entity
 {
-    public class ExamichDbContext : IdentityDbContext<UserEntity, IdentityRole<Guid>, Guid>
+    public class ExamichUserServiceDbContext : IdentityDbContext<UserEntity, IdentityRole<Guid>, Guid>
     {
         public DbSet<UserEntity> ApplicationUsers { get; set; }
 
-        public ExamichDbContext(DbContextOptions options) : base(options)
+        public ExamichUserServiceDbContext(DbContextOptions options) : base(options)
         {
         }
 

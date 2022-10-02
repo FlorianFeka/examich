@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Examich.Entity.Data.User
+namespace ExamichUserService.Entity.Data.User
 {
     public class UserEntity : IdentityUser<Guid>
     {

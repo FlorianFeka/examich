@@ -1,4 +1,4 @@
-﻿namespace Examich.DTO
+﻿namespace ExamichUserService.DTO
 {
     public enum UserRoleDto
     {

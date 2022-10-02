@@ -1,6 +1,6 @@
-﻿using Examich.DTO;
-using Examich.Entity.Repository;
-using Examich.Exceptions;
+﻿using ExamichUserService.DTO;
+using ExamichUserService.Entity.Repository;
+using ExamichUserService.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -11,7 +11,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Examich.Controllers
+namespace ExamichUserService.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -34,7 +34,7 @@ namespace Examich.Controllers
                 var id = await _userRepository.CreateUserAsync(userDto);
                 return Created("https://localhost:5001/users", new { id });
             }
-            catch (ExamichDbException e)
+            catch (ExamichUserServiceDbException e)
             {
                 return Conflict(e.Message);
             }

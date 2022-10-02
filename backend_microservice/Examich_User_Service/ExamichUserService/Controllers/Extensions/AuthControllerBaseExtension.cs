@@ -3,7 +3,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Examich.Controllers.Extensions
+namespace ExamichUserService.Controllers.Extensions
 {
     public static class AuthControllerBaseExtension
     {

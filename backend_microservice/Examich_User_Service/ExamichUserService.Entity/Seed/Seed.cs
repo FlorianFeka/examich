@@ -1,12 +1,12 @@
-using Examich.Entity.Seed.Seeder;
+using ExamichUserService.Entity.Seed.Seeder;
 
-namespace Examich.Entity.Seed
+namespace ExamichUserService.Entity.Seed
 {
     public class Seed
     {
-        private ExamichDbContext _context;
+        private ExamichUserServiceDbContext _context;
 
-        public Seed(ExamichDbContext context)
+        public Seed(ExamichUserServiceDbContext context)
         {
             _context = context;
         }

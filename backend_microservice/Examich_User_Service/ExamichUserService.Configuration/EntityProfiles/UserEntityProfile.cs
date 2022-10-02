@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using Examich.DTO;
-using Examich.Entity.Data.User;
+using ExamichUserService.DTO;
+using ExamichUserService.Entity.Data.User;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
 
-namespace Examich.Configuration.EntityProfiles
+namespace ExamichUserService.Configuration.EntityProfiles
 {
     public class UserEntityProfile : Profile
     {

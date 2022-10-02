@@ -1,10 +1,10 @@
 ﻿using System;
-using Examich.DTO;
-using Examich.DTO.User;
+using ExamichUserService.DTO;
+using ExamichUserService.DTO.User;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Examich.Entity.Repository
+namespace ExamichUserService.Entity.Repository
 {
     public interface IUserRepository
     {

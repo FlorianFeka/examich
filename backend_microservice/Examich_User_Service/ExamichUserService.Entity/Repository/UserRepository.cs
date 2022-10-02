@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Examich.DTO;
-using Examich.DTO.User;
-using Examich.Entity.Data.User;
-using Examich.Exceptions;
+using ExamichUserService.DTO;
+using ExamichUserService.DTO.User;
+using ExamichUserService.Entity.Data.User;
+using ExamichUserService.Exceptions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -11,13 +11,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Examich.Entity.Repository
+namespace ExamichUserService.Entity.Repository
 {
     public class UserRepository : IUserRepository
     {
-        private readonly ExamichDbContext _context;
+        private readonly ExamichUserServiceDbContext _context;
         private readonly IMapper _mapper;
-        public UserRepository(ExamichDbContext context, IMapper mapper)
+        public UserRepository(ExamichUserServiceDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -28,17 +28,17 @@ namespace Examich.Entity.Repository
             switch(await UserExistsAsync(user.Email, user.Username))
             {
                 case 1:
-                    throw new ExamichDbException($"User with email '{user.Email}' already exists.");
+                    throw new ExamichUserServiceDbException($"User with email '{user.Email}' already exists.");
                 case 2:
-                    throw new ExamichDbException($"User with username '{user.Username}'");
+                    throw new ExamichUserServiceDbException($"User with username '{user.Username}'");
                 case 3:
-                    throw new ExamichDbException($"User with email '{user.Email}' and username '{user.Username}' already exists.");
+                    throw new ExamichUserServiceDbException($"User with email '{user.Email}' and username '{user.Username}' already exists.");
             }
 
             var userEntity = _mapper.Map<UserEntity>(user);
 
                        
-            var userStore = new UserStore<UserEntity, IdentityRole<Guid>, ExamichDbContext, Guid>(_context);
+            var userStore = new UserStore<UserEntity, IdentityRole<Guid>, ExamichUserServiceDbContext, Guid>(_context);
             await userStore.CreateAsync(userEntity);
 
             await _context.SaveChangesAsync();

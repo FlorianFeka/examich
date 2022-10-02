@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Examich.DTO.User
+namespace ExamichUserService.DTO.User
 {
     public class GetUserDto
     {

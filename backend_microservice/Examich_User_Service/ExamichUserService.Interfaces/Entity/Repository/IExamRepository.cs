@@ -1,9 +1,9 @@
 ﻿using System;
-using Examich.DTO.Exam;
+using ExamichUserService.DTO.Exam;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Examich.Interfaces.Entity.Repository
+namespace ExamichUserService.Interfaces.Entity.Repository
 {
     public interface IExamRepository
     {

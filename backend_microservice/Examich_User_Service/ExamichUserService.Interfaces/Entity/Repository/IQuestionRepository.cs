@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Examich.DTO.Question;
+using ExamichUserService.DTO.Question;
 
-namespace Examich.Interfaces.Entity.Repository
+namespace ExamichUserService.Interfaces.Entity.Repository
 {
     public interface IQuestionRepository
     {
