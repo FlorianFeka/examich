@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: monoe-deployment
+  labels:
+    app: monoe
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: monoe
+  template:
+    metadata:
+      labels:
+        app: monoe
+    spec:
+      containers:
+      - name: monoe
+        image: monoe-examich:v3
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
