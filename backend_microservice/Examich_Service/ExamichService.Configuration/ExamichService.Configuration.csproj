@@ -9,8 +9,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Examich.DTO\Examich.DTO.csproj" />
-    <ProjectReference Include="..\Examich.Entity\Examich.Entity.csproj" />
+    <ProjectReference Include="..\ExamichService.DTO\ExamichService.DTO.csproj" />
+    <ProjectReference Include="..\ExamichService.Entity\ExamichService.Entity.csproj" />
   </ItemGroup>
 
 </Project>

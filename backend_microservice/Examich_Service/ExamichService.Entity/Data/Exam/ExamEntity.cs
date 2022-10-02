@@ -1,10 +1,9 @@
-﻿using Examich.Entity.Data.Base;
-using Examich.Entity.Data.User;
+﻿using ExamichService.Entity.Data.Base;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 
-namespace Examich.Entity.Data.Exam
+namespace ExamichService.Entity.Data.Exam
 {
     public class ExamEntity : AuditEntity
     {
@@ -12,9 +11,7 @@ namespace Examich.Entity.Data.Exam
         public string Description {  get; set; }
 
         public Guid CreatorId { get; set; }
-        public UserEntity Creator { get; set; }
         public Guid UserId { get; set; }
-        public UserEntity User { get; set; }
         public IEnumerable<QuestionEntity> Questions { get; set; }
 
         public static new void OnModelBuilding(ModelBuilder builder)
@@ -22,10 +19,6 @@ namespace Examich.Entity.Data.Exam
             builder.Entity<ExamEntity>()
                 .Property(x => x.Name)
                 .IsRequired();
-
-            //builder.Entity<ExamEntity>()
-            //    .HasIndex(x => new { x.UserId, x.Name })
-            //    .IsUnique();
         }
     }
 }

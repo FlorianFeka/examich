@@ -1,4 +1,4 @@
-﻿namespace Examich.DTO.Exam
+﻿namespace ExamichService.DTO.Exam
 {
     public class GetExamDto
     {

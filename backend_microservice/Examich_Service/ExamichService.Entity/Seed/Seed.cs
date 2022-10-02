@@ -1,12 +1,12 @@
-using Examich.Entity.Seed.Seeder;
+using ExamichService.Entity.Seed.Seeder;
 
-namespace Examich.Entity.Seed
+namespace ExamichService.Entity.Seed
 {
     public class Seed
     {
-        private ExamichDbContext _context;
+        private ExamichServiceDbContext _context;
 
-        public Seed(ExamichDbContext context)
+        public Seed(ExamichServiceDbContext context)
         {
             _context = context;
         }
@@ -16,7 +16,6 @@ namespace Examich.Entity.Seed
             _context.Database.EnsureCreated();
 
             // SEED HERE
-            UserSeeder.Seed(_context);
             ExamSeeder.Seed(_context);
         }
     }

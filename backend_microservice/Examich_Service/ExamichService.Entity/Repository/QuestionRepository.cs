@@ -1,22 +1,22 @@
 using AutoMapper;
-using Examich.DTO.Question;
-using Examich.Entity.Data.Exam;
-using Examich.Exceptions;
+using ExamichService.DTO.Question;
+using ExamichService.Entity.Data.Exam;
+using ExamichService.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Examich.Entity.Repository
+namespace ExamichService.Entity.Repository
 {
     public class QuestionRepository : IQuestionRepository
     {
-        private readonly ExamichDbContext _context;
+        private readonly ExamichServiceDbContext _context;
         private readonly IExamRepository _examRepository;
         private readonly IMapper _mapper;
 
-        public QuestionRepository(ExamichDbContext context, IExamRepository examRepository, IMapper mapper)
+        public QuestionRepository(ExamichServiceDbContext context, IExamRepository examRepository, IMapper mapper)
         {
             _context = context;
             _examRepository = examRepository;
@@ -25,7 +25,7 @@ namespace Examich.Entity.Repository
 
         public async Task<int> CreateQuestionAsync(CreateQuestionDTO createQuestionDto)
         {
-            if (!await _examRepository.ExamExistsAsync(createQuestionDto.ExamId)) throw new ExamichDbException("Exam not found");
+            if (!await _examRepository.ExamExistsAsync(createQuestionDto.ExamId)) throw new ExamichServiceDbException("Exam not found");
             var question = _mapper.Map<QuestionEntity>(createQuestionDto);
             question.ExamId = createQuestionDto.ExamId;
             await _context.Questions.AddAsync(question);
@@ -37,7 +37,7 @@ namespace Examich.Entity.Repository
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == questionId);
             
-            if (questionToDuplicate == null) throw new ExamichDbException("Question not found");
+            if (questionToDuplicate == null) throw new ExamichServiceDbException("Question not found");
 
             questionToDuplicate.Id = Guid.NewGuid();
             await _context.Questions.AddAsync(questionToDuplicate);
@@ -82,7 +82,7 @@ namespace Examich.Entity.Repository
         public async Task<int> UpdateQuestionAsync(Guid questionId, UpdateQuestionDTO updateQuestion)
         {
             var questionToUpdate = await _context.Questions.FindAsync(questionId);
-            if (questionToUpdate == null) throw new ExamichDbException("Question not found.");
+            if (questionToUpdate == null) throw new ExamichServiceDbException("Question not found.");
 
             _mapper.Map(updateQuestion, questionToUpdate);
             return await _context.SaveChangesAsync();
@@ -91,7 +91,7 @@ namespace Examich.Entity.Repository
         public async Task<int> DeleteQuestionAsync(Guid questionId)
         {
             var question = await _context.Questions.FindAsync(questionId);
-            if (question == null) throw new ExamichDbException("Question not found");
+            if (question == null) throw new ExamichServiceDbException("Question not found");
             _context.Questions.Remove(question);
             return await _context.SaveChangesAsync();
         }

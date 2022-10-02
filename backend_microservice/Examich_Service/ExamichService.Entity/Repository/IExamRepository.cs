@@ -1,10 +1,10 @@
 ﻿using System;
-using Examich.DTO.Exam;
+using ExamichService.DTO.Exam;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Examich.Entity.Data.Exam;
+using ExamichService.Entity.Data.Exam;
 
-namespace Examich.Entity.Repository
+namespace ExamichService.Entity.Repository
 {
     public interface IExamRepository
     {

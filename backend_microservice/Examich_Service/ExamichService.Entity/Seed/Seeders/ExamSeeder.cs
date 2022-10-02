@@ -1,19 +1,19 @@
+using System;
 using Bogus;
-using Examich.Entity.Data.Exam;
+using ExamichService.Entity.Data.Exam;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Examich.Entity.Seed.Seeder
+namespace ExamichService.Entity.Seed.Seeder
 {
     public static class ExamSeeder
     {
-        public static void Seed(ExamichDbContext dbContext)
+        public static string GUID_ZEROS = "00000000-0000-0000-0000-00000000000";
+        public static void Seed(ExamichServiceDbContext dbContext)
         {
             if (dbContext.Exams.Any()) return;
 
             var exams = new List<ExamEntity>();
-            var users = UserSeeder.GetTestUsers(dbContext);
-
 
             var f = new Faker("en");
             for (int i = 0; i < 3; i++)
@@ -41,14 +41,15 @@ namespace Examich.Entity.Seed.Seeder
                         Answers = answers
                     });
                 }
-                var user = users[i];
+
+                var userId = Guid.Parse($"{GUID_ZEROS}{i}");
                 exams.Add(new ExamEntity()
                 {
-                    Id = user.Id,
+                    Id = userId,
                     Name = string.Join(" ", f.Lorem.Words(f.Random.Number(3, 6))),
                     Description = string.Join(" ", f.Lorem.Words(f.Random.Number(6, 16))),
-                    Creator = user,
-                    User = user,
+                    CreatorId = userId,
+                    UserId = userId,
                     Questions = questions,
                 }); ;
 

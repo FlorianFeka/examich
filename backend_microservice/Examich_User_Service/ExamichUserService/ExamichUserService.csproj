@@ -35,4 +35,11 @@
     <ProjectReference Include="..\ExamichUserService.Entity\ExamichUserService.Entity.csproj" />
     <ProjectReference Include="..\ExamichUserService.Exceptions\ExamichUserService.Exceptions.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Assets\logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

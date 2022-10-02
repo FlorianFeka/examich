@@ -22,8 +22,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Examich.DTO\Examich.DTO.csproj" />
-	  <ProjectReference Include="..\Examich.Exceptions\Examich.Exceptions.csproj" />
+	  <ProjectReference Include="..\ExamichService.DTO\ExamichService.DTO.csproj" />
+	  <ProjectReference Include="..\ExamichService.Exceptions\ExamichService.Exceptions.csproj" />
 	</ItemGroup>
 
 </Project>

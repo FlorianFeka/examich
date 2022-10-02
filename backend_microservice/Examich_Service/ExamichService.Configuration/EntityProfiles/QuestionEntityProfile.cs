@@ -1,8 +1,8 @@
 using AutoMapper;
-using Examich.DTO.Question;
-using Examich.Entity.Data.Exam;
+using ExamichService.DTO.Question;
+using ExamichService.Entity.Data.Exam;
 
-namespace Examich.Configuration.EntityProfiles
+namespace ExamichService.Configuration.EntityProfiles
 {
     public class QuestionEntityProfile : Profile
     {

@@ -1,4 +1,4 @@
-﻿namespace Examich.Configuration
+﻿namespace ExamichService.Configuration
 {
     public class Base
     {

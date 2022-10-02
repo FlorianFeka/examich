@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Examich.DTO.Question.Answer;
+using ExamichService.DTO.Question.Answer;
 
-namespace Examich.DTO.Question
+namespace ExamichService.DTO.Question
 {
     public class GetQuestionDTO
     {

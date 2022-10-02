@@ -1,7 +1,6 @@
-using Examich.Configuration.Dependency;
-using Examich.Entity;
-using Examich.Entity.Seed;
-using Examich.Services;
+using ExamichService.Configuration.Dependency;
+using ExamichService.Entity;
+using ExamichService.Entity.Seed;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -15,7 +14,7 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text;
 
-namespace Examich
+namespace ExamichService
 {
     public class Startup
     {
@@ -45,7 +44,7 @@ namespace Examich
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Examich", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ExamichService", Version = "v1" });
 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
@@ -75,16 +74,14 @@ namespace Examich
 
             services.AddRepositoryConfig();
 
-            services.AddTransient<IPdfCreator, PdfCreator>();
-
             services.AddTransient<Seed>();
 
-            services.AddDbContextPool<ExamichDbContext>(
+            services.AddDbContextPool<ExamichServiceDbContext>(
                 //opt => opt.UseInMemoryDatabase(databaseName: "examich"));
-                //opt => opt.UseSqlServer(Configuration["ConnectionStrings:ExamichDb"]));
+                //opt => opt.UseSqlServer(Configuration["ConnectionStrings:ExamichServiceDb"]));
                 opt =>
                 {
-                    opt.UseSqlServer(Configuration["ConnectionStrings:ExamichDb"]);
+                    opt.UseSqlServer(Configuration["ConnectionStrings:ExamichServiceDb"]);
                     if (!Environment.IsProduction())
                     {
                         opt.EnableSensitiveDataLogging();
@@ -110,21 +107,21 @@ namespace Examich
                     opt.TokenValidationParameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["IssuerSigningKey"]));
                 });
 
-            services.AddAutoMapper(Assembly.GetAssembly(typeof(Examich.Configuration.Base)));
+            services.AddAutoMapper(Assembly.GetAssembly(typeof(ExamichService.Configuration.Base)));
 
-            services.AddFluentValidation(conf => conf.RegisterValidatorsFromAssemblyContaining<Examich.Configuration.Base>());
+            services.AddFluentValidation(conf => conf.RegisterValidatorsFromAssemblyContaining<ExamichService.Configuration.Base>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Seed seed)
         {
-            if (!env.IsProduction())
-            {
+            // if (!env.IsProduction())
+            // {
                 seed.Init();
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Examich v1"));
-            }
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ExamichService v1"));
+            // }
 
             //app.UseHttpsRedirection();
 

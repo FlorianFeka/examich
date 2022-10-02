@@ -1,4 +1,4 @@
-namespace Examich.DTO.Question.Answer
+namespace ExamichService.DTO.Question.Answer
 {
     public class CreateAnswerDTO
     {

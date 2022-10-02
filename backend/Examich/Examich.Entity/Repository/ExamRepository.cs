@@ -13,13 +13,11 @@ namespace Examich.Entity.Repository
     public class ExamRepository : IExamRepository
     {
         private readonly ExamichDbContext _context;
-        private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
-        public ExamRepository(ExamichDbContext context, IUserRepository userRepository, IMapper mapper)
+        public ExamRepository(ExamichDbContext context, IMapper mapper)
         {
             _context = context;
-            _userRepository = userRepository;
             _mapper = mapper;
         }
 
@@ -44,7 +42,6 @@ namespace Examich.Entity.Repository
                 .FirstOrDefaultAsync(x => x.Id == examId);
 
             if (examToDuplicate == null) throw new ExamichDbException("Exam not found.");
-            if (!await _userRepository.UserExistsAsync(examToDuplicate.UserId)) throw new ExamichDbException("User not found.");
 
             examToDuplicate.Id = Guid.NewGuid();
             examToDuplicate.UserId = userId;

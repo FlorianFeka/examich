@@ -1,23 +1,23 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Examich.Exceptions
+namespace ExamichService.Exceptions
 {
-    public class ExamichDbException : Exception
+    public class ExamichServiceDbException : Exception
     {
-        public ExamichDbException()
+        public ExamichServiceDbException()
         {
         }
 
-        public ExamichDbException(string message) : base(message)
+        public ExamichServiceDbException(string message) : base(message)
         {
         }
 
-        public ExamichDbException(string message, Exception innerException) : base(message, innerException)
+        public ExamichServiceDbException(string message, Exception innerException) : base(message, innerException)
         {
         }
 
-        protected ExamichDbException(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected ExamichServiceDbException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
     }

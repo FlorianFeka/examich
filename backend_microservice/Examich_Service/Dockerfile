@@ -8,13 +8,13 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 COPY . .
-RUN dotnet restore Examich/Examich.csproj
-RUN dotnet build Examich/Examich.csproj -c Production -o /app/build
+RUN dotnet restore ExamichService/ExamichService.csproj
+RUN dotnet build ExamichService/ExamichService.csproj -c Production -o /app/build
 
 FROM build AS publish
-RUN dotnet publish Examich/Examich.csproj -c Production -o /app/publish
+RUN dotnet publish ExamichService/ExamichService.csproj -c Production -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Examich.dll"]
+ENTRYPOINT ["dotnet", "ExamichService.dll"]

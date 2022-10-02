@@ -1,8 +1,7 @@
-﻿using Examich.Controllers.Extensions;
-using Examich.DTO.Exam;
-using Examich.Entity.Repository;
-using Examich.Exceptions;
-using Examich.Services;
+﻿using ExamichService.Controllers.Extensions;
+using ExamichService.DTO.Exam;
+using ExamichService.Entity.Repository;
+using ExamichService.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Examich.Controllers
+namespace ExamichService.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]
@@ -18,12 +17,10 @@ namespace Examich.Controllers
     public class ExamsController : ControllerBase
     {
         private readonly IExamRepository _examRepository;
-        private readonly IPdfCreator _pdfCreator;
 
-        public ExamsController(IExamRepository examRepository, IPdfCreator pdfCreator)
+        public ExamsController(IExamRepository examRepository)
         {
             _examRepository = examRepository;
-            _pdfCreator = pdfCreator;
         }
 
         #region EXAM ENDPOINTS
@@ -36,7 +33,7 @@ namespace Examich.Controllers
             {
                 return Ok(await _examRepository.GetExamInfoByIdAsync(examId));
             } 
-            catch(ExamichDbException e)
+            catch(ExamichServiceDbException e)
             {
                 return Conflict(e.Message);
             }
@@ -73,7 +70,7 @@ namespace Examich.Controllers
                 }
                 await _examRepository.CreateExamAsync(userId, createExamDto);
             }
-            catch (ExamichDbException e)
+            catch (ExamichServiceDbException e)
             {
                 return Conflict(e.Message);
             }
@@ -94,7 +91,7 @@ namespace Examich.Controllers
                 }
                 return Ok(await _examRepository.DuplicateExamAsync(examId, userId));
             }
-            catch (ExamichDbException e)
+            catch (ExamichServiceDbException e)
             {
                 return Conflict(e.Message);
             }
@@ -113,7 +110,7 @@ namespace Examich.Controllers
                 }
                 await _examRepository.UpdateExamAsync(examId, userId, updateExamDto);
             }
-            catch (ExamichDbException e)
+            catch (ExamichServiceDbException e)
             {
                 return Conflict(e.Message);
             }
@@ -134,28 +131,11 @@ namespace Examich.Controllers
             {
                 await _examRepository.DeleteExamAsync(examId, userId);
             }
-            catch (ExamichDbException e)
+            catch (ExamichServiceDbException e)
             {
                 return Conflict(e.Message);
             }
             return Ok();
-        }
-
-        [HttpPost("{examId}/PDF")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(string))]
-        public async Task<IActionResult> ExportExamToPdf(Guid examId, [FromQuery] bool markAnswers)
-        {
-            try
-            {
-                var file = await _pdfCreator.GeneratePdfAsync(examId, markAnswers);
-                var exam = await _examRepository.GetExamInfoByIdAsync(examId);
-                return Ok(File(file, "application/octet-stream", $"{exam.Name}.pdf"));
-            }
-            catch (ExamichDbException e)
-            {
-                return Conflict(e.Message);
-            }
         }
         #endregion
     }

@@ -1,7 +1,7 @@
-﻿using Examich.Controllers.Extensions;
-using Examich.DTO.Question;
-using Examich.Entity.Repository;
-using Examich.Exceptions;
+﻿using ExamichService.Controllers.Extensions;
+using ExamichService.DTO.Question;
+using ExamichService.Entity.Repository;
+using ExamichService.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Examich.Controllers
+namespace ExamichService.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]
@@ -33,7 +33,7 @@ namespace Examich.Controllers
             {
                 return Ok(await _questionRepository.GetQuestionByIdAsync(questionId));
             }
-            catch (ExamichDbException e)
+            catch (ExamichServiceDbException e)
             {
                 return Conflict(e.Message);
             }
@@ -48,7 +48,7 @@ namespace Examich.Controllers
             {
                 return Ok(await _questionRepository.GetQuestionsByExamIdAsync(examId));
             }
-            catch (ExamichDbException e)
+            catch (ExamichServiceDbException e)
             {
                 return Conflict(e.Message);
             }
@@ -67,7 +67,7 @@ namespace Examich.Controllers
                 }
                 await _questionRepository.DuplicateQuestionAsync(questionId);
             }
-            catch (ExamichDbException e)
+            catch (ExamichServiceDbException e)
             {
                 return Conflict(e.Message);
             }
@@ -87,7 +87,7 @@ namespace Examich.Controllers
                 }
                 await _questionRepository.CreateQuestionAsync(createQuestionDto);
             }
-            catch (ExamichDbException e)
+            catch (ExamichServiceDbException e)
             {
                 return Conflict(e.Message);
             }
@@ -107,7 +107,7 @@ namespace Examich.Controllers
                 }
                 await _questionRepository.UpdateQuestionAsync(questionId, updateQuestionDto);
             }
-            catch (ExamichDbException e)
+            catch (ExamichServiceDbException e)
             {
                 return Conflict(e.Message);
             }
@@ -128,7 +128,7 @@ namespace Examich.Controllers
             {
                 await _questionRepository.DeleteQuestionAsync(questionId);
             }
-            catch (ExamichDbException e)
+            catch (ExamichServiceDbException e)
             {
                 return Conflict(e.Message);
             }

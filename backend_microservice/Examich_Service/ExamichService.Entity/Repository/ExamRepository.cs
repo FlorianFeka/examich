@@ -1,25 +1,23 @@
 ﻿using AutoMapper;
-using Examich.DTO.Exam;
-using Examich.Entity.Data.Exam;
-using Examich.Exceptions;
+using ExamichService.DTO.Exam;
+using ExamichService.Entity.Data.Exam;
+using ExamichService.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Examich.Entity.Repository
+namespace ExamichService.Entity.Repository
 {
     public class ExamRepository : IExamRepository
     {
-        private readonly ExamichDbContext _context;
-        private readonly IUserRepository _userRepository;
+        private readonly ExamichServiceDbContext _context;
         private readonly IMapper _mapper;
 
-        public ExamRepository(ExamichDbContext context, IUserRepository userRepository, IMapper mapper)
+        public ExamRepository(ExamichServiceDbContext context, IMapper mapper)
         {
             _context = context;
-            _userRepository = userRepository;
             _mapper = mapper;
         }
 
@@ -43,8 +41,7 @@ namespace Examich.Entity.Repository
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == examId);
 
-            if (examToDuplicate == null) throw new ExamichDbException("Exam not found.");
-            if (!await _userRepository.UserExistsAsync(examToDuplicate.UserId)) throw new ExamichDbException("User not found.");
+            if (examToDuplicate == null) throw new ExamichServiceDbException("Exam not found.");
 
             examToDuplicate.Id = Guid.NewGuid();
             examToDuplicate.UserId = userId;
@@ -93,8 +90,8 @@ namespace Examich.Entity.Repository
         public async Task<int> UpdateExamAsync(Guid examId, Guid userId, UpdateExamDto updateExam)
         {
             var examToUpdate = await _context.Exams.FindAsync(examId);
-            if (examToUpdate == null) throw new ExamichDbException("Exam not found.");
-            if (examToUpdate.UserId == userId) throw new ExamichDbException("Exam not owned by user.");
+            if (examToUpdate == null) throw new ExamichServiceDbException("Exam not found.");
+            if (examToUpdate.UserId == userId) throw new ExamichServiceDbException("Exam not owned by user.");
 
             _mapper.Map(updateExam, examToUpdate);
             return await _context.SaveChangesAsync();
@@ -103,8 +100,8 @@ namespace Examich.Entity.Repository
         public async Task<int> DeleteExamAsync(Guid examId, Guid userId)
         {
             var exam = await _context.Exams.FindAsync(examId);
-            if (exam == null) throw new ExamichDbException("Exam not found.");
-            if (exam.UserId != userId) throw new ExamichDbException("Exam not owned by user.");
+            if (exam == null) throw new ExamichServiceDbException("Exam not found.");
+            if (exam.UserId != userId) throw new ExamichServiceDbException("Exam not owned by user.");
             _context.Exams.Remove(exam);
             return await _context.SaveChangesAsync();
         }

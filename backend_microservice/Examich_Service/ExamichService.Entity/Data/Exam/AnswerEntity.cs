@@ -1,8 +1,8 @@
 ﻿using System;
-using Examich.Entity.Data.Base;
+using ExamichService.Entity.Data.Base;
 using Microsoft.EntityFrameworkCore;
 
-namespace Examich.Entity.Data.Exam
+namespace ExamichService.Entity.Data.Exam
 {
     public class AnswerEntity : AuditEntity
     {
