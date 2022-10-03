@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace ExamichUserService.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/UsersService/[controller]")]
     public class InfoController : ControllerBase
     {
 

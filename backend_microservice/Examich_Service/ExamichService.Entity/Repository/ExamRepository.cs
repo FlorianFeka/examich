@@ -35,7 +35,7 @@ namespace ExamichService.Entity.Repository
             return await _context.Exams.AnyAsync(e => e.Id == examId);
         }
 
-        public async Task<GetExamDto> DuplicateExamAsync(Guid examId, Guid userId)
+        public async Task<GetExamInfoDto> DuplicateExamAsync(Guid examId, Guid userId)
         {
             var examToDuplicate = await _context.Exams
                 .AsNoTracking()
@@ -48,41 +48,42 @@ namespace ExamichService.Entity.Repository
             await _context.Exams.AddAsync(examToDuplicate);
             await _context.SaveChangesAsync();
 
-            return _mapper.Map<GetExamDto>(examToDuplicate);
+            return _mapper.Map<GetExamInfoDto>(examToDuplicate);
         }
 
-        public async Task<GetExamDto> GetExamInfoByIdAsync(Guid id)
+        public async Task<GetExamInfoDto> GetExamInfoByIdAsync(Guid id)
         {
             var exam = await _context.Exams.FindAsync(id);
-            return _mapper.Map<GetExamDto>(exam);
+            return _mapper.Map<GetExamInfoDto>(exam);
         }
 
-        public async Task<ExamEntity> GetExamByIdAsync(Guid id)
+        public async Task<GetExamDto> GetExamByIdAsync(Guid id)
         {
             return await _context.Exams
                 .Include(x => x.Questions)
                 .ThenInclude(x => x.Answers)
                 .Where(x => x.Id == id)
+                .Select(x => _mapper.Map<GetExamDto>(x))
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<List<GetExamDto>> GetExamsByNameAsync(string name)
+        public async Task<List<GetExamInfoDto>> GetExamsByNameAsync(string name)
         {
             var exams = await _context.Exams
                 .AsNoTracking()
                 .Where(x => x.Name.Contains(name))
-                .Select(x => _mapper.Map<GetExamDto>(x))
+                .Select(x => _mapper.Map<GetExamInfoDto>(x))
                 .ToListAsync();
             return exams;
         }
 
-        public async Task<List<GetExamDto>> GetExamsByUserIdAsync(Guid userId)
+        public async Task<List<GetExamInfoDto>> GetExamsByUserIdAsync(Guid userId)
         {
             var exams = await _context.Exams
                 .AsNoTracking()
                 .Where(x => x.UserId == userId)
-                .Select(x => _mapper.Map<GetExamDto>(x))
+                .Select(x => _mapper.Map<GetExamInfoDto>(x))
                 .ToListAsync();
             return exams;
         }

@@ -25,7 +25,7 @@ namespace ExamichService.Controllers
 
         #region EXAM ENDPOINTS
         [HttpGet("{examId}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetExamDto))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GetExamInfoDto))]
         [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(string))]
         public async Task<IActionResult> GetOneExam(Guid examId)
         {
@@ -40,7 +40,7 @@ namespace ExamichService.Controllers
         }
 
         [HttpGet("User")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<GetExamDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<GetExamInfoDto>))]
         [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(string))]
         public async Task<IActionResult> GetAllExamsFromUser()
         {
@@ -50,7 +50,19 @@ namespace ExamichService.Controllers
             }
             return Ok(await _examRepository.GetExamsByUserIdAsync(userId));
         }
-
+        
+        [HttpGet("{examId}/Complete")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<GetExamInfoDto>))]
+        [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(string))]
+        public async Task<IActionResult> GetOneCompleteExam(Guid examId)
+        {
+            if (!this.TryGetUserId(out Guid userId))
+            {
+                return Unauthorized();
+            }
+            return Ok(await _examRepository.GetExamByIdAsync(examId));
+        }
+        
         [HttpGet("Search")]
         public async Task<IActionResult> SearchExam([FromQuery]string name)
         {

@@ -11,11 +11,11 @@ namespace ExamichService.Entity.Repository
         Task<int> CreateExamAsync(Guid userId, CreateExamDto createExam);
         Task<bool> ExamExistsAsync(Guid examId);
         Task<int> UpdateExamAsync(Guid examId, Guid userId, UpdateExamDto updateExam);
-        Task<List<GetExamDto>> GetExamsByNameAsync(string name);
-        Task<List<GetExamDto>> GetExamsByUserIdAsync(Guid userId);
-        Task<GetExamDto> GetExamInfoByIdAsync(Guid id);
-        Task<ExamEntity> GetExamByIdAsync(Guid id);
-        Task<GetExamDto> DuplicateExamAsync(Guid examId, Guid userId);
+        Task<List<GetExamInfoDto>> GetExamsByNameAsync(string name);
+        Task<List<GetExamInfoDto>> GetExamsByUserIdAsync(Guid userId);
+        Task<GetExamInfoDto> GetExamInfoByIdAsync(Guid id);
+        Task<GetExamDto> GetExamByIdAsync(Guid id);
+        Task<GetExamInfoDto> DuplicateExamAsync(Guid examId, Guid userId);
         Task<int> DeleteExamAsync(Guid examId, Guid userId);
     }
 }

@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Linq;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
 using Examich_PDF_Service.Api_Client.API;
-using Examich_PDF_Service.Controllers.Extensions;
 using Examich_PDF_Service.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Examich_PDF_Service.Controllers
 {
+    [Authorize]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class FileController : ControllerBase
     {
 

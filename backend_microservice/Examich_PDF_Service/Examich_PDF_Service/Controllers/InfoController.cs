@@ -1,16 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace ExamichService.Controllers
+namespace Examich_PDF_Service.Controllers
 {
     [ApiController]
-    [Route("api/ExamsService/[controller]")]
+    [Route("api/PdfService/[controller]")]
     public class InfoController : ControllerBase
     {
-
         [HttpGet("Health")]
-        public string Get()
+        public string Info()
         {
-            return "Healty";
+            return "Healthy";
         }
     }
 }

@@ -8,7 +8,7 @@ namespace ExamichService.Configuration.DtoProfiles
     {
         public ExamDtoProfile()
         {
-            CreateMap<ExamEntity, GetExamDto>()
+            CreateMap<ExamEntity, GetExamInfoDto>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(x => x.Id))
                 .ForMember(x => x.Name, opt => opt.MapFrom(x => x.Name))
                 .ForMember(x => x.Description, opt => opt.MapFrom(x => x.Description))
