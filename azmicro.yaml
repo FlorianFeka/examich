@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
       - name: micro-user
-        image: docker.io/library/micro-user:v1
-        imagePullPolicy: Never
+        image: registry.feka.info/micro-user:v1
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
 
@@ -53,8 +53,8 @@ spec:
     spec:
       containers:
       - name: micro-exam
-        image: docker.io/library/micro-exam:v1
-        imagePullPolicy: Never
+        image: registry.feka.info/micro-exam:v1
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
 
@@ -90,8 +90,8 @@ spec:
     spec:
       containers:
       - name: micro-pdf
-        image: docker.io/library/micro-pdf:v1
-        imagePullPolicy: Never
+        image: registry.feka.info/micro-pdf:v1
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
 
@@ -108,16 +108,17 @@ spec:
       port: 9090
       targetPort: 80
 
-
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: http-ingress
+  annotations:
+    kubernetes.io/ingress.class: addon-http-application-routing
 spec:
   rules:
-  - host: micro.local
-    http:
+          #- host: examich-microservice-dns-24173f82.hcp.westeurope.azmk8s.io
+  - http:
       paths:
       - path: /api/Users
         pathType: Prefix
@@ -175,3 +176,22 @@ spec:
             name: micro-pdf-service
             port:
               number: 9090
+
+              #---
+#apiVersion: v1
+#kind: Service
+#metadata:
+ #     name: http-loadbalancer
+ #     labels:
+ #       app: http-loadbalancer
+    #spec:
+ #     type: LoadBalancer
+ #     ports:
+ #     - name: http
+ #       port: 80
+ #       targetPort: 80
+ #     selector:
+          #    app: http-ingress
+
+
+
