@@ -2,6 +2,8 @@
 
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 WORKDIR /app
+# RUN apk add --no-cache icu-libs
+# RUN apk add --no-cache fontconfig
 EXPOSE 80
 EXPOSE 443
 

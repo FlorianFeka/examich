@@ -24,7 +24,7 @@ namespace Examich_PDF_Service.Services
                         page.Margin(2, Unit.Centimetre);
                         page.PageColor(Colors.White);
 
-                        page.Header().AlignTop().AlignRight().Image("Assets/logo.png");
+                        //page.Header().AlignTop().AlignRight().Image("Assets/logo.png");
 
                         page.Content()
                             .PaddingVertical(1, Unit.Centimetre)

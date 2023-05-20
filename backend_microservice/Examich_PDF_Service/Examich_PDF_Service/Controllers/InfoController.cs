@@ -11,5 +11,12 @@ namespace Examich_PDF_Service.Controllers
         {
             return "Healthy";
         }
+
+        [HttpGet("User")]
+        public IActionResult User()
+        {
+                if (!Request.Headers.TryGetValue("Authorization", out var bearer)) return Unauthorized();
+                return Ok(bearer[0].Split(" ")[1]);
+        }
     }
 }

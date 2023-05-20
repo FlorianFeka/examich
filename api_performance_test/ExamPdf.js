@@ -4,7 +4,7 @@ const TOKEN =
 
 export default function () {
   const url =
-    "http://localhost:5000/api/Exams/00000000-0000-0000-0000-000000000002/PDF?markAnswers=true";
+    "http://micro.local/api/File/00000000-0000-0000-0000-000000000002/PDF?markAnswers=true";
 
   const params = {
     headers: {
@@ -19,5 +19,4 @@ export default function () {
   };
 
   const a = http.post(url, null, params);
-  console.log(a.status);
 }

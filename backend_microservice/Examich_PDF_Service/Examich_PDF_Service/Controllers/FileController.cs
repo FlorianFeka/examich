@@ -32,12 +32,9 @@ namespace Examich_PDF_Service.Controllers
         {
             try
             {
-                var bearer = User.Claims
-                    .Where(x => x.Type == ClaimTypes.NameIdentifier)
-                    .Select(x => x.Value)
-                    .FirstOrDefault();
+                if (!Request.Headers.TryGetValue("Authorization", out var bearer)) return Unauthorized();
                 
-                var exam = await _examsApi.GetExamByIdAsync(examId, bearer);
+                var exam = await _examsApi.GetExamByIdAsync(examId, bearer[0].Split(" ")[1]);
                 var file = await _pdfCreator.GeneratePdfAsync(markAnswers, exam);
                 return Ok(File(file, "application/octet-stream", $"{exam.Name}.pdf"));
             }
