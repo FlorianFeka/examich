@@ -16,8 +16,14 @@ spec:
     spec:
       containers:
       - name: monoe
-        image: docker.io/library/mono:v1
-        imagePullPolicy: Never
+        image: registry.feka.info/examich-monolith:latest
+        imagePullPolicy: Always
+        env:
+        - name: DOTNET_ENVIRONMENT
+          value: "PRODUCTION"
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "PRODUCTION"
         ports:
         - containerPort: 80
 

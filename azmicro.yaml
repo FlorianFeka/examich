@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: micro-user
-        image: registry.feka.info/micro-user:v1
+        image: registry.feka.info/micro-user:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 80
@@ -53,7 +53,7 @@ spec:
     spec:
       containers:
       - name: micro-exam
-        image: registry.feka.info/micro-exam:v1
+        image: registry.feka.info/micro-exam:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 80
@@ -90,7 +90,7 @@ spec:
     spec:
       containers:
       - name: micro-pdf
-        image: registry.feka.info/micro-pdf:v1
+        image: registry.feka.info/micro-pdf:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 80

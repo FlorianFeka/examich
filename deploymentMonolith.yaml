@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: monoe
-        image: mono-examich:v1
+        image: mono-examich:latest
         imagePullPolicy: Never
         ports:
         - containerPort: 80

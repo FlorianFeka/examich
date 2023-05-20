@@ -13,7 +13,7 @@ services:
     build: ./backend/Examich
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      DOTNET_GENERATE_ASPNET_CERTIFICATE: true
+      DOTNET_GENERATE_ASPNET_CERTIFICATE: "true"
     profiles:
       - backend
       - all
