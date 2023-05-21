@@ -31,7 +31,7 @@ spec:
     app: micro-user
   ports:
     - protocol: TCP
-      port: 9090
+      port: 9091
       targetPort: 80
 
 ---
@@ -68,7 +68,7 @@ spec:
     app: micro-exam
   ports:
     - protocol: TCP
-      port: 9090
+      port: 9091
       targetPort: 80
 
 ---
@@ -105,7 +105,7 @@ spec:
     app: micro-pdf
   ports:
     - protocol: TCP
-      port: 9090
+      port: 9091
       targetPort: 80
 
 ---
@@ -126,56 +126,77 @@ spec:
           service:
             name: micro-user-service
             port:
-              number: 9090
+              number: 9091
       - path: /api/Auth
         pathType: Prefix
         backend:
           service:
             name: micro-user-service
             port:
-              number: 9090
+              number: 9091
       - path: /api/UsersService
         pathType: Prefix
         backend:
           service:
             name: micro-user-service
             port:
-              number: 9090
-      - path: /api/Exams
-        pathType: Prefix
-        backend:
-          service:
-            name: micro-exam-service
-            port:
-              number: 9090
-      - path: /api/Questions
-        pathType: Prefix
-        backend:
-          service:
-            name: micro-exam-service
-            port:
-              number: 9090
+              number: 9091
       - path: /api/ExamsService
+
         pathType: Prefix
         backend:
           service:
             name: micro-exam-service
             port:
-              number: 9090
+              number: 9091
       - path: /api/File
         pathType: Prefix
         backend:
           service:
             name: micro-pdf-service
             port:
-              number: 9090
+              number: 9091
       - path: /api/PdfService
         pathType: Prefix
         backend:
           service:
             name: micro-pdf-service
             port:
-              number: 9090
+              number: 9091
+        pathType: Prefix
+        backend:
+          service:
+            name: micro-exam-service
+            port:
+              number: 9091
+      - path: /api/Questions
+        pathType: Prefix
+        backend:
+          service:
+            name: micro-exam-service
+            port:
+              number: 9091
+      - path: /api/ExamsService
+        pathType: Prefix
+        backend:
+          service:
+            name: micro-exam-service
+            port:
+              number: 9091
+      - path: /api/File
+        pathType: Prefix
+        backend:
+          service:
+            name: micro-pdf-service
+            port:
+              number: 9091
+      - path: /api/PdfService
+        pathType: Prefix
+        backend:
+          service:
+            name: micro-pdf-service
+            port:
+              number: 9091
 
               #---
 #apiVersion: v1

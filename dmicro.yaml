@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: micro-user-deployment
+  name: microservice-user-deployment
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: micro-user
+      app: microservice-user
   template:
     metadata:
       labels:
-        app: micro-user
+        app: microservice-user
     spec:
       containers:
-      - name: micro-user
-        image: docker.io/florianfeka/micro-user:v1
-        imagePullPolicy: Never
+      - name: microservice-user
+        image: registry.feka.info/examich-microservice-user:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
 
@@ -23,36 +23,36 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: micro-user-service
+  name: microservice-user-service
 spec:
   selector:
-    app: micro-user
+    app: microservice-user
   ports:
     - protocol: TCP
-      port: 9090
+      port: 9091
       targetPort: 80
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: micro-exam-deployment
+  name: microservice-exam-deployment
   labels:
-    app: micro-exam
+    app: microservice-exam
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: micro-exam
+      app: microservice-exam
   template:
     metadata:
       labels:
-        app: micro-exam
+        app: microservice-exam
     spec:
       containers:
-      - name: micro-exam
-        image: docker.io/florianfeka/micro-exam:v1
-        imagePullPolicy: Never
+      - name: microservice-exam
+        image: registry.feka.info/examich-microservice-exam:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
 
@@ -60,36 +60,36 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: micro-exam-service
+  name: microservice-exam-service
 spec:
   selector:
-    app: micro-exam
+    app: microservice-exam
   ports:
     - protocol: TCP
-      port: 9090
+      port: 9091
       targetPort: 80
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: micro-pdf-deployment
+  name: microservice-pdf-deployment
   labels:
-    app: micro-pdf
+    app: microservice-pdf
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: micro-pdf
+      app: microservice-pdf
   template:
     metadata:
       labels:
-        app: micro-pdf
+        app: microservice-pdf
     spec:
       containers:
-      - name: micro-pdf
-        image: registry.hub.docker.com/florianfeka/micro-pdf:v1
-        imagePullPolicy: Never
+      - name: microservice-pdf
+        image: registry.feka.info/examich-microservice-pdf:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
 
@@ -97,13 +97,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: micro-pdf-service
+  name: microservice-pdf-service
 spec:
   selector:
-    app: micro-pdf
+    app: microservice-pdf
   ports:
     - protocol: TCP
-      port: 9090
+      port: 9091
       targetPort: 80
 
 ---
@@ -113,83 +113,82 @@ metadata:
   name: http-ingress
 spec:
   rules:
-  - host: examich-microservice-dns-cab51af4.hcp.westeurope.azmk8s.io
-    http:
+  #- host: examich-microservice-dns-cab51af4.hcp.westeurope.azmk8s.io
+  - http:
       paths:
       - path: /api/Users
         pathType: Prefix
         backend:
           service:
-            name: micro-user-service
+            name: microservice-user-service
             port:
-              number: 9090
+              number: 9091
       - path: /api/Auth
         pathType: Prefix
         backend:
           service:
-            name: micro-user-se
-            name: micro-exam-service
+            name: microservice-user-service
             port:
-              number: 9090
+              number: 9091
       - path: /api/Questions
         pathType: Prefix
         backend:
           service:
-            name: micro-exam-service
+            name: microservice-exam-service
             port:
-              number: 9090
+              number: 9091
       - path: /api/ExamsService
         pathType: Prefix
         backend:
           service:
-            name: micro-exam-service
+            name: microservice-exam-service
             port:
-              number: 9090
+              number: 9091
       - path: /api/File
         pathType: Prefix
         backend:
           service:
-            name: micro-pdf-service
+            name: microservice-pdf-service
             port:
-              number: 9090
+              number: 9091
       - path: /api/PdfService
         pathType: Prefix
         backend:
           service:
-            name: micro-pdf-service
+            name: microservice-pdf-service
             port:
-              number: 9090
+              number: 9091
         pathType: Prefix
         backend:
           service:
-            name: micro-exam-service
+            name: microservice-exam-service
             port:
-              number: 9090
+              number: 9091
       - path: /api/Questions
         pathType: Prefix
         backend:
           service:
-            name: micro-exam-service
+            name: microservice-exam-service
             port:
-              number: 9090
+              number: 9091
       - path: /api/ExamsService
         pathType: Prefix
         backend:
           service:
-            name: micro-exam-service
+            name: microservice-exam-service
             port:
-              number: 9090
+              number: 9091
       - path: /api/File
         pathType: Prefix
         backend:
           service:
-            name: micro-pdf-service
+            name: microservice-pdf-service
             port:
-              number: 9090
+              number: 9091
       - path: /api/PdfService
         pathType: Prefix
         backend:
           service:
-            name: micro-pdf-service
+            name: microservice-pdf-service
             port:
-              number: 9090
+              number: 9091

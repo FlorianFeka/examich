@@ -7,9 +7,9 @@ export const options = {
   },
   stages: [
     { duration: '1s', target: 10 },
-//    { duration: '1m', target: 10 },
-//    { duration: '1m', target: 20 },
-//    { duration: '1m', target: 0 },
+    { duration: '1m', target: 10 },
+    { duration: '1m', target: 20 },
+    { duration: '1m', target: 0 },
   ],
 //  thresholds: { http_req_duration: ['avg<100', 'p(95)<200'] },
   noConnectionReuse: true,
@@ -17,7 +17,7 @@ export const options = {
 };
 
 export default function () {
-  const url = 'http://mi.cro/api/Auth/Login';
+  const url = 'http://mo.no/api/Auth/Login';
   const payload = JSON.stringify({
     email: "max@gmail.com",
     password: "password",
