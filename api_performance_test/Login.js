@@ -17,7 +17,7 @@ export const options = {
 };
 
 export default function () {
-  const url = 'http://mo.no/api/Auth/Login';
+  const url = 'http://mi.cro/api/Auth/Login';
   const payload = JSON.stringify({
     email: "max@gmail.com",
     password: "password",
