@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: monoe
-        image: registry.feka.info/examich-monolith:latest
+        image: dockernexus.spiegeleione.fillerserver.net/examich/examich-monolith:latest
         imagePullPolicy: Always
         env:
         - name: DOTNET_ENVIRONMENT

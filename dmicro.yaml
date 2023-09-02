@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: microservice-user
-        image: registry.feka.info/examich-microservice-user:latest
+        image: dockernexus.spiegeleione.fillerserver.net/examich/examich-microservice-user:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 80
@@ -51,7 +51,7 @@ spec:
     spec:
       containers:
       - name: microservice-exam
-        image: registry.feka.info/examich-microservice-exam:latest
+        image: dockernexus.spiegeleione.fillerserver.net/examich/examich-microservice-exam:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 80
@@ -88,7 +88,7 @@ spec:
     spec:
       containers:
       - name: microservice-pdf
-        image: registry.feka.info/examich-microservice-pdf:latest
+        image: dockernexus.spiegeleione.fillerserver.net/examich/examich-microservice-pdf:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 80
@@ -99,12 +99,14 @@ kind: Service
 metadata:
   name: microservice-pdf-service
 spec:
+  type: NodePort
   selector:
     app: microservice-pdf
   ports:
     - protocol: TCP
       port: 9091
       targetPort: 80
+      nodePort: 30001
 
 ---
 apiVersion: networking.k8s.io/v1
