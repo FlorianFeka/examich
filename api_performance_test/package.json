@@ -8,7 +8,9 @@
     "pdf": "docker run --rm -i grafana/k6 run - <ExamPdf.js",
     "login": "docker run --rm -i grafana/k6 run - <Login.js",
     "loginRep": "k6 run --out json=test_results2.json Login.js",
-    "loginRemRep": "K6_INFLUXDB_ADDR=http://192.168.178.28:8086 K6_INFLUXDB_ORGANIZATION=Local K6_INFLUXDB_BUCKET=testmono K6_INFLUXDB_TOKEN=M_Q06gZYWVvYu7YZZ3cVF33D90lN0VVFYVKiyMGunN-iBNpEqGj70UbX1zv5XxifN1q1UYBXqnWYGmMqCTmmQQ== ./k6 run -o xk6-influxdb Login.js"
+    "loginRemRep": "K6_INFLUXDB_ADDR=http://influx.feka.info K6_INFLUXDB_ORGANIZATION=MyWorkspace K6_INFLUXDB_BUCKET=examich K6_INFLUXDB_TOKEN=MR9XzKm-VzfkYovctWcM-Qk4Sj5XuQWLCaKEoyGRC0EE8HFedZ1ue1wRfiWF9Shm6pk5uECBEpuI5hVwz3JdGA== ./k6 run -o xk6-influxdb Login.js",
+    "loginRemRepMono": "K6_INFLUXDB_ADDR=http://influx.feka.info K6_INFLUXDB_ORGANIZATION=MyWorkspace K6_INFLUXDB_BUCKET=examich_mono K6_INFLUXDB_TOKEN=MR9XzKm-VzfkYovctWcM-Qk4Sj5XuQWLCaKEoyGRC0EE8HFedZ1ue1wRfiWF9Shm6pk5uECBEpuI5hVwz3JdGA== ./k6 run -o xk6-influxdb Login.js",
+    "loginRemRepMicro": "K6_INFLUXDB_ADDR=http://influx.feka.info K6_INFLUXDB_ORGANIZATION=MyWorkspace K6_INFLUXDB_BUCKET=examich_micro K6_INFLUXDB_TOKEN=MR9XzKm-VzfkYovctWcM-Qk4Sj5XuQWLCaKEoyGRC0EE8HFedZ1ue1wRfiWF9Shm6pk5uECBEpuI5hVwz3JdGA== ./k6 run -o xk6-influxdb Login.js"
   },
   "type": "module",
   "author": "",
