@@ -10,7 +10,7 @@ namespace ExamichService.Controllers
         [HttpGet("Health")]
         public string Get()
         {
-            return "Healty";
+            return "Healthy";
         }
     }
 }
