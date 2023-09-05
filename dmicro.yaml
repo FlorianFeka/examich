@@ -99,14 +99,12 @@ kind: Service
 metadata:
   name: microservice-pdf-service
 spec:
-  type: NodePort
   selector:
     app: microservice-pdf
   ports:
     - protocol: TCP
       port: 9091
       targetPort: 80
-      nodePort: 30001
 
 ---
 apiVersion: networking.k8s.io/v1
@@ -115,7 +113,7 @@ metadata:
   name: http-ingress
 spec:
   rules:
-  #- host: examich-microservice-dns-cab51af4.hcp.westeurope.azmk8s.io
+  - host: k1s.fillerserver.net
   - http:
       paths:
       - path: /api/Users
@@ -132,41 +130,21 @@ spec:
             name: microservice-user-service
             port:
               number: 9091
-      - path: /api/Questions
+      - path: /api/UsersService
         pathType: Prefix
         backend:
           service:
-            name: microservice-exam-service
-            port:
-              number: 9091
-      - path: /api/ExamsService
-        pathType: Prefix
-        backend:
-          service:
-            name: microservice-exam-service
-            port:
-              number: 9091
-      - path: /api/File
-        pathType: Prefix
-        backend:
-          service:
-            name: microservice-pdf-service
-            port:
-              number: 9091
-      - path: /api/PdfService
-        pathType: Prefix
-        backend:
-          service:
-            name: microservice-pdf-service
-            port:
-              number: 9091
-        pathType: Prefix
-        backend:
-          service:
-            name: microservice-exam-service
+            name: microservice-user-service
             port:
               number: 9091
       - path: /api/Questions
+        pathType: Prefix
+        backend:
+          service:
+            name: microservice-exam-service
+            port:
+              number: 9091
+      - path: /api/Exams
         pathType: Prefix
         backend:
           service:
