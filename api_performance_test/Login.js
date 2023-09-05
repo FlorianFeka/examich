@@ -1,10 +1,6 @@
 import http from "k6/http";
 
 export const options = {
-  hosts: {
-    'mo.no': '192.168.178.105:30002',
-    'mi.cro': '192.168.178.105'
-  },
   stages: [
     { duration: '1s', target: 10 },
     { duration: '1m', target: 10 },
@@ -17,7 +13,7 @@ export const options = {
 };
 
 export default function () {
-  const url = 'http://mi.cro/api/Auth/Login';
+  const url = 'http://k1s.fillerserver.net:30001/api/Auth/Login';
   const payload = JSON.stringify({
     email: "max@gmail.com",
     password: "password",
