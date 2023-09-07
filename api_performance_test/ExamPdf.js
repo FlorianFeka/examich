@@ -3,13 +3,23 @@ import getTestUserAuthToken from './pre/Auth'
 import { monoURL, microURL, testUser } from './Constants.js';
 
 export const options = {
-  stages: [
-    { duration: '1m', target: 10 },
-    { duration: '1m', target: 20 },
-    { duration: '1m', target: 20 },
-    { duration: '1m', target: 10 },
-    { duration: '1m', target: 0 },
-  ],
+  scenarios: {
+    // define scenarios
+    breaking: {
+      executor: "ramping-vus",
+      stages: [
+        { duration: "10s", target: 20 },
+        { duration: "50s", target: 20 },
+        { duration: "50s", target: 40 },
+        { duration: "50s", target: 60 },
+        { duration: "50s", target: 80 },
+        { duration: "50s", target: 10 },
+        { duration: "50s", target: 10 },
+        { duration: "50s", target: 10 },
+        //....
+      ],
+    },
+  },
 //  thresholds: { http_req_duration: ['avg<100', 'p(95)<200'] },
   noConnectionReuse: true,
   userAgent: 'MyK6UserAgentString/1.0',
