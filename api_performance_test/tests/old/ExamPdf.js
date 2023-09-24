@@ -1,6 +1,6 @@
 import http from "k6/http";
-import getTestUserAuthToken from './pre/Auth'
-import { monoURL, microURL, testUser } from './Constants.js';
+// import getTestUserAuthToken from './pre/Auth.js'
+import { monoURL, microURL, testUser } from './pre/Constants.js';
 
 export const options = {
   scenarios: {

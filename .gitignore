@@ -2,6 +2,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/linux,windows,angular,dotnetcore,visualstudio,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=linux,windows,angular,dotnetcore,visualstudio,visualstudiocode
 
+k1s.fillerserver.net.token
+k1s.fillerserver.net:30001.token
+
 temp/
 
 ### Angular ###

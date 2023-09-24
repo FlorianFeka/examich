@@ -9,8 +9,8 @@
     "login": "docker run --rm -i grafana/k6 run - <Login.js",
     "loginRep": "k6 run --out json=test_results2.json Login.js",
     "loginRemRep": "K6_INFLUXDB_ADDR=https://influxdbb.spiegeleione.fillerserver.net K6_INFLUXDB_ORGANIZATION=examich K6_INFLUXDB_BUCKET=examich K6_INFLUXDB_TOKEN=Y4DB2_h4kxHD7NAMIWZkEeer4S7HAwK9vrNh-OP8A-xQ6Ri-o9MgSYWmKZVVpJGyMjmpeVpFevk5AF1dv8K-qg== ./k6 run -o xk6-influxdb ",
-    "loginRemRepMono": "K6_INFLUXDB_ADDR=https://influxdbb.spiegeleione.fillerserver.net K6_INFLUXDB_ORGANIZATION=examich K6_INFLUXDB_BUCKET=examich_mono K6_INFLUXDB_TOKEN=MR9XzKm-VzfkYovctWcM-Qk4Sj5XuQWLCaKEoyGRC0EE8HFedZ1ue1wRfiWF9Shm6pk5uECBEpuI5hVwz3JdGA== ./k6 run -o xk6-influxdb Login.js",
-    "loginRemRepMicro": "K6_INFLUXDB_ADDR=https://influxdbb.spiegeleione.fillerserver.net K6_INFLUXDB_ORGANIZATION=examich K6_INFLUXDB_BUCKET=examich_micro K6_INFLUXDB_TOKEN=MR9XzKm-VzfkYovctWcM-Qk4Sj5XuQWLCaKEoyGRC0EE8HFedZ1ue1wRfiWF9Shm6pk5uECBEpuI5hVwz3JdGA== ./k6 run -o xk6-influxdb Login.js"
+    "loginRemRepMono": "K6_INFLUXDB_ADDR=https://influxdbb.spiegeleione.fillerserver.net K6_INFLUXDB_ORGANIZATION=examich K6_INFLUXDB_BUCKET=examich_mono K6_INFLUXDB_TOKEN=MR9XzKm-VzfkYovctWcM-Qk4Sj5XuQWLCaKEoyGRC0EE8HFedZ1ue1wRfiWF9Shm6pk5uECBEpuI5hVwz3JdGA== ./k6 run -o xk6-influxdb ",
+    "loginRemRepMicro": "K6_INFLUXDB_ADDR=https://influxdbb.spiegeleione.fillerserver.net K6_INFLUXDB_ORGANIZATION=examich K6_INFLUXDB_BUCKET=examich_micro K6_INFLUXDB_TOKEN=MR9XzKm-VzfkYovctWcM-Qk4Sj5XuQWLCaKEoyGRC0EE8HFedZ1ue1wRfiWF9Shm6pk5uECBEpuI5hVwz3JdGA== ./k6 run -o xk6-influxdb "
   },
   "type": "module",
   "author": "",

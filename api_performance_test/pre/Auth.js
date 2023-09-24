@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { monoURL, microURL, testUser } from './Constants.js';
+import { writeFileSync } from 'fs';
+import { monoURL, microURL, testUser, protocol } from './Constants.js';
 
 const createTestUser = async (url) => {
   const response = await axios.post(`${url}/api/Auth/Register`, testUser);
@@ -7,9 +8,22 @@ const createTestUser = async (url) => {
     throw new Error(response);
 }
 
-export const getTestUserAuthToken = async (url) => {
+const getTestUserAuthToken = async (url) => {
   const response = await axios.post(`${url}/api/Auth/Login`, {email: testUser.email, password: testUser.password});
   if(response.status === 200)
     return response.data.token;
   throw new Error(response);
 }
+
+const saveTokenToFile = (url, token) => {
+  writeFileSync(`${url}.token`, token, {flag: 'w+'}, (err) => {
+    if (err)
+      console.error(err);
+    console.log(`Saved token to file ${url}.token`);
+  });
+}
+
+// createTestUser(protocol+monoURL);
+// createTestUser(protocol+microURL);
+saveTokenToFile(monoURL, await getTestUserAuthToken(protocol+monoURL));
+saveTokenToFile(microURL, await getTestUserAuthToken(protocol+microURL));
