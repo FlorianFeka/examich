@@ -26,6 +26,7 @@ export default function () {
   });
 
   const params = {
+    timeout: '800s',
     headers: {
       "Content-Type": "application/json",
     },

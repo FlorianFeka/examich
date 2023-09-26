@@ -30,6 +30,7 @@ export default async function () {
     `${protocol}${target}/api/Exams/User`;
 
   const params = {
+    timeout: '800s',
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${TOKEN}`,

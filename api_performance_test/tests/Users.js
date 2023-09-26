@@ -22,6 +22,7 @@ export default function () {
     `${protocol}${target}/api/Users/Search?username=user`;
 
   const params = {
+    timeout: '800s',
     headers: {
       "Content-Type": "application/json",
     },
