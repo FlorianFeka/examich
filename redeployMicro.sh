@@ -1,5 +1,5 @@
 #!/bin/bash
 
 ./pushmicro.sh $1
-kubectl delete -f dmicro.yaml && kubectl apply -f dmicro.yaml
-kubectl get pods
+kubectl --kubeconfig /home/feka/.kube/config delete -f dmicro.yaml && kubectl --kubeconfig /home/feka/.kube/config apply -f dmicro.yaml
+kubectl --kubeconfig /home/feka/.kube/config get pods
