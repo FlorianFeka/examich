@@ -18,7 +18,6 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.10" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.10" />
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10" />
-		<PackageReference Include="QuestPDF" Version="2022.9.0" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -19,7 +19,7 @@ const TOKEN = open(`../${target}.token`);
 
 export default async function () {
   const url =
-    `${protocol}${target}/api/Exams/00000000-0000-0000-0000-000000000002/PDF`;
+    `${protocol}${target}/api/Exams/00000000-0000-0000-0000-000000000002/PDF?markAnswers=false`;
 
   const params = {
     timeout: '800s',

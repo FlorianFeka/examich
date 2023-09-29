@@ -20,7 +20,7 @@ namespace Examich.Entity.Seed.Seeder
             {
                 var questions = new List<QuestionEntity>();
 
-                for (int j = 0; j < f.Random.Number(11000, 11500); j++)
+                for (int j = 0; j < f.Random.Number(60, 500); j++)
                 {
                     var answers = new List<AnswerEntity>();
 
