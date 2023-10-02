@@ -9,6 +9,7 @@ export const options = {
     { duration: '2m', target: 900 },
     { duration: '2m', target: 300 },
     { duration: '1m', target: 300 },
+    { duration: '1m', target: 0 },
   ],
 //  thresholds: { http_req_duration: ['avg<100', 'p(95)<200'] },
   noConnectionReuse: true,
