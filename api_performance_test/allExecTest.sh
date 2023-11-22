@@ -16,3 +16,5 @@ K6_INFLUXDB_BUCKET=tmp ./k6 run -e MONO=true -o xk6-influxdb tests/Questions.js
 K6_INFLUXDB_BUCKET=tmp_b ./k6 run -e MONO=false -o xk6-influxdb tests/Users.js
 K6_INFLUXDB_BUCKET=tmp_b ./k6 run -e MONO=true -o xk6-influxdb tests/Users.js
 
+K6_INFLUXDB_BUCKET=tmp_f ./k6 run -e MONO=false -o xk6-influxdb tests/FileMicro.js; K6_INFLUXDB_BUCKET=tmp_b ./k6 run -e MONO=true -o xk6-influxdb tests/FileMono.js
+

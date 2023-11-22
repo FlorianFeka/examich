@@ -5,7 +5,7 @@ metadata:
   labels:
     app: monoe
 spec:
-  replicas: 1
+  replicas: 8
   selector:
     matchLabels:
       app: monoe
