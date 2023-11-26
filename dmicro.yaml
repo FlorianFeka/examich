@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: microservice-user-deployment
 spec:
-  replicas: 2
+  replicas: 4
   selector:
     matchLabels:
       app: microservice-user
@@ -77,7 +77,7 @@ metadata:
   labels:
     app: microservice-pdf
 spec:
-  replicas: 8
+  replicas: 4
   selector:
     matchLabels:
       app: microservice-pdf
