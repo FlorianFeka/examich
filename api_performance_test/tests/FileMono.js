@@ -2,34 +2,24 @@ import http from "k6/http";
 import { protocol, monoURL, microURL } from '/home/feka/Documents/projects/FH_Project_Examich/api_performance_test/pre/Constants.js';
 
 export const options = {
-  // scenarios: {
-  //   contacts: {
-  //     executor: 'constant-vus',
-  //     vus: 900,
-  //     duration: '8m'
-  //   }
-  // },
-  stages: [
-    { duration: '30s', target: 10 },
-    { duration: '30s', target: 10 },
-    { duration: '30s', target: 60 },
-    { duration: '1m', target: 60 },
-    { duration: '30s', target: 10 },
-    { duration: '30s', target: 10 },
-    { duration: '30s', target: 0 },
-  ],
-  // stages: [
-  //   { duration: '1m', target: 20 },
-  //   { duration: '1m', target: 20 },
-  //   { duration: '2m', target: 80 },
-  //   { duration: '2m', target: 80 },
-  //   { duration: '2m', target: 20 },
-  //   { duration: '1m', target: 20 },
-  //   { duration: '1m', target: 0 },
-  // ],
-//  thresholds: { http_req_duration: ['avg<100', 'p(95)<200'] },
-  noConnectionReuse: true,
-  userAgent: 'MyK6UserAgentString/1.0',
+  scenarios: {
+    constant_request_rate_30: {
+      executor: 'constant-arrival-rate',
+      rate: 30,
+      timeUnit: '1m',
+      duration: '2m',
+      preAllocatedVUs: 1,
+      maxVUs: 1,
+    },
+    constant_request_rate_100100: {
+      executor: 'constant-arrival-rate',
+      rate: 100100,
+      timeUnit: '1m',
+      duration: '2m',
+      preAllocatedVUs: 1,
+      maxVUs: 1,
+    },
+  },
 };
 const target = monoURL;
 const TOKEN = open(`../${target}.token`);
