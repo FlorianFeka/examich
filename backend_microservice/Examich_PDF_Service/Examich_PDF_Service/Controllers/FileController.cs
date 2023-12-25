@@ -13,6 +13,7 @@ namespace Examich_PDF_Service.Controllers
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
+    [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]  
     public class FileController : ControllerBase
     {
 

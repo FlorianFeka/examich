@@ -3,21 +3,21 @@ import { protocol, monoURL, microURL } from '/home/feka/Documents/projects/FH_Pr
 
 export const options = {
   scenarios: {
-    constant_request_rate_30: {
+    // constant_request_rate_30: {
+    //   executor: 'constant-arrival-rate',
+    //   rate: 30,
+    //   timeUnit: '1m',
+    //   duration: '2m',
+    //   preAllocatedVUs: 1,
+    //   maxVUs: 1,
+    // },
+    constant_request_rate_300000: {
       executor: 'constant-arrival-rate',
-      rate: 30,
+      rate: 300000,
       timeUnit: '1m',
       duration: '2m',
-      preAllocatedVUs: 1,
-      maxVUs: 1,
-    },
-    constant_request_rate_100100: {
-      executor: 'constant-arrival-rate',
-      rate: 100100,
-      timeUnit: '1m',
-      duration: '2m',
-      preAllocatedVUs: 1,
-      maxVUs: 1,
+      preAllocatedVUs: 100,
+      maxVUs: 200,
     },
   },
 };

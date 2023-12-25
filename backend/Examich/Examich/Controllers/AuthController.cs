@@ -15,6 +15,7 @@ namespace Examich.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]  
     public class AuthController : ControllerBase
     {
         private readonly IUserRepository _userRepository;

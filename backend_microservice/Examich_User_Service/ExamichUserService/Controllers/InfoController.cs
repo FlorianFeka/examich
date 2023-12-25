@@ -12,6 +12,7 @@ namespace ExamichUserService.Controllers
 {
     [ApiController]
     [Route("api/UsersService/[controller]")]
+    [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]  
     public class InfoController : ControllerBase
     {
 

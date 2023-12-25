@@ -4,6 +4,7 @@ namespace Examich_PDF_Service.Controllers
 {
     [ApiController]
     [Route("api/PdfService/[controller]")]
+    [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]  
     public class InfoController : ControllerBase
     {
         [HttpGet("Health")]
